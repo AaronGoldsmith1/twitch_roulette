@@ -43,10 +43,15 @@ function getTopStreams() {
   fetch(request).then((response) => response.json())
     .then((responseJson) => { 
       streams = responseJson.data;
-      console.log(streams)
     }).catch((error) => { 
       console.error(error);
     });
+}
+
+function getRandomStreamUrl(streams) {
+  let randomStream = streams[Math.floor(Math.random()*streams.length)];
+  let randomUser = randomStream.user_name;
+  return `https://player.twitch.tv/?${random_user}>&parent=streamernews.example.com`
 }
 
 
