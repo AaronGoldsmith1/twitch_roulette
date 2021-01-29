@@ -50,10 +50,17 @@ function getTopStreams() {
 
 function getRandomStreamUrl(streams) {
   let randomStream = streams[Math.floor(Math.random()*streams.length)];
-  let randomUser = randomStream.user_name;
-  return `https://player.twitch.tv/?${random_user}>&parent=streamernews.example.com`
+  return randomStream.user_name;
 }
 
+function embedStream() {
+  new Twitch.Embed("twitch-embed", {
+    width: 800,
+    height: 500,
+    channel: "dakotaz",
+    parent: ['localhost']
+  });
+}
 
 // function init() {
 //   getAccessToken()
