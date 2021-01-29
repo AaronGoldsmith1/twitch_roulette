@@ -3,7 +3,8 @@ const clientSecret = 'khcxdmodyqxoajyybl0mguqzmqjb6m';
 
 const tokenUrl = `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
 
-let access_token;
+let access_token = 'xo0t4ahhetbujy7qvyx5jjf078e00p'
+let streams;
 
 // {
 //     "access_token": "g62m6nffxtjyglauttx17u3j286ara",
@@ -28,3 +29,29 @@ function getAccessToken() {
       console.error(error);
     });
 }
+
+function getTopStreams() {
+  const request = new Request(topStreamsUrl, { 
+    method: 'GET' ,
+    headers: {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${access_token}`,
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  });
+
+  fetch(request).then((response) => response.json())
+    .then((responseJson) => { 
+      streams = responseJson.data;
+      console.log(streams)
+    }).catch((error) => { 
+      console.error(error);
+    });
+}
+
+
+// function init() {
+//   getAccessToken()
+// }
+
+// init()
