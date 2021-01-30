@@ -7,6 +7,9 @@ const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
 let access_token = 'xo0t4ahhetbujy7qvyx5jjf078e00p'
 let streams;
 
+const spinButtons = document.querySelectorAll('button');
+const mainContent = document.getElementById('main-content');
+
 function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
 
@@ -49,6 +52,15 @@ function embedStream() {
     parent: ['localhost']
   });
 }
+
+spinButtons.forEach(function(button) {
+  button.addEventListener('click', function(e) {
+    if (mainContent) {
+      mainContent.remove()
+    }
+    embedStream()
+  })
+})
 
 // function init() {
 //   getAccessToken()
