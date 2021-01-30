@@ -35,7 +35,7 @@ function getTopStreams() {
       let streams = responseJson.data;
       let randomStream = streams[Math.floor(Math.random()*streams.length)].user_name;
     
-      new Twitch.Embed("twitch-embed", {
+      new Twitch.Embed('twitch-embed', {
         width: 800,
         height: 500,
         channel: randomStream,
@@ -47,18 +47,18 @@ function getTopStreams() {
 }
 
 
-spinButtons.forEach(function(button) {
-  button.addEventListener('click', function(e) {
-    if (mainContent) {
-      mainContent.remove()
-    }
-    getTopStreams()
-  })
-})
 
 function init() {
   getAccessToken() 
-  
+
+  spinButtons.forEach(function(button) {
+    button.addEventListener('click', function(e) {
+      if (mainContent) {
+        mainContent.remove()
+      }
+      getTopStreams()
+    })
+  })
 }
 
 init()
