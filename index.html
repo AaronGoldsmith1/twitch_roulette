@@ -3,19 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
   <script src="app.js"></script>
-  <title>Document</title>
+  <script src="https://embed.twitch.tv/embed/v1.js"></script>
+  <title>Twitch Roulette</title>
 </head>
 <body>
   <div id="twitch-embed"></div>
-  <script src="https://embed.twitch.tv/embed/v1.js"></script>
-   <script type="text/javascript">
-      new Twitch.Embed("twitch-embed", {
-        width: 854,
-        height: 480,
-        channel: "dakotaz",
-        parent: ["localhost"]
-      });
-    </script>
 </body>
 </html>
