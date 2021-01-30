@@ -4,10 +4,9 @@ const clientSecret = 'khcxdmodyqxoajyybl0mguqzmqjb6m';
 const tokenUrl = `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
 const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
 
-let access_token = 'xo0t4ahhetbujy7qvyx5jjf078e00p'
-let streams;
+let access_token;
 
-const spinButtons = document.querySelectorAll('button');
+const spinButtons = document.querySelectorAll('.spin');
 const mainContent = document.getElementById('main-content');
 
 function getAccessToken() {
@@ -33,37 +32,33 @@ function getTopStreams() {
 
   fetch(request).then((response) => response.json())
     .then((responseJson) => { 
-      streams = responseJson.data;
+      let streams = responseJson.data;
+      let randomStream = streams[Math.floor(Math.random()*streams.length)].user_name;
+    
+      new Twitch.Embed("twitch-embed", {
+        width: 800,
+        height: 500,
+        channel: randomStream,
+        parent: ['localhost']
+      });
     }).catch((error) => { 
       console.error(error);
     });
 }
 
-function getRandomStream(streams) {
-  let randomStream = streams[Math.floor(Math.random()*streams.length)];
-  return randomStream.user_name;
-}
-
-function embedStream() {
-  new Twitch.Embed("twitch-embed", {
-    width: 800,
-    height: 500,
-    channel: 'dakotaz',
-    parent: ['localhost']
-  });
-}
 
 spinButtons.forEach(function(button) {
   button.addEventListener('click', function(e) {
     if (mainContent) {
       mainContent.remove()
     }
-    embedStream()
+    getTopStreams()
   })
 })
 
-// function init() {
-//   getAccessToken()
-// }
+function init() {
+  getAccessToken() 
+  
+}
 
-// init()
+init()
