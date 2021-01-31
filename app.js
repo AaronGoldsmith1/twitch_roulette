@@ -6,7 +6,8 @@ const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
 const searchStreamsUrl = `https://api.twitch.tv/helix/search/channels?live_only=true&first=100&query=`
 
 let access_token;
-let search_query;
+let searchEndpoint;
+let searchQuery;
 
 const searchButton = document.getElementById('search-button');
 const searchInput = document.getElementById('search-input');
@@ -51,10 +52,49 @@ function getTopStreams() {
     });
 }
 
+function searchStreams() {
+  searchQuery = searchInput.value;
+  searchEndPoint = searchStreamsUrl + searchQuery;
 
+  const request = new Request(searchEndPoint, { 
+    method: 'GET' ,
+    headers: {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${access_token}`,
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  });
+
+  fetch(request).then(response => response.json())
+    .then((responseJson) => { 
+      let streams = responseJson.data;
+      let randomStream = streams[Math.floor(Math.random()*streams.length)].display_name;
+
+      new Twitch.Embed('twitch-embed', {
+        width: '100%',
+        height: '100%',
+        channel: randomStream,
+        parent: ['localhost']
+      });
+    }).catch((error) => { 
+      console.error(error);
+    });
+
+}
 
 function init() {
   getAccessToken() 
+
+  searchButton.addEventListener('click', function(){
+    if (welcomeCard) {
+        welcomeCard.remove()
+      }
+      if (document.getElementsByTagName('iframe').length){
+        document.getElementsByTagName('iframe')[0].remove();
+      }
+    searchStreams();
+    searchInput.value = '';
+  })
 
   spinButtons.forEach(function(button) {
     button.addEventListener('click', function(e) {
