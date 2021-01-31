@@ -1,3 +1,7 @@
+aside {
+    background-color: #f5f5f5;
+}
+
 .footer {
     position: fixed;
     text-align: center;
@@ -7,3 +11,4 @@
     line-height: 60px;
     background-color: #f5f5f5;
 }
+
