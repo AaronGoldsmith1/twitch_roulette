@@ -57,8 +57,8 @@ function getTopStreams() {
     });
 }
 
-function searchStreams() {
-  searchQuery = searchInput.value;
+function searchStreams(searchQuery) {
+  searchQuery = searchQuery ? searchQuery : searchInput.value;
   searchEndPoint = searchStreamsUrl + searchQuery;
 
   const request = new Request(searchEndPoint, { 
@@ -85,7 +85,10 @@ function searchStreams() {
     }).catch((error) => { 
       console.error(error);
     });
-
+    if(document.getElementsByClassName('clear')[0]) {
+      document.getElementsByClassName('clear')[0].click()
+    }
+  
 }
 
 function initTagDropDown() {
@@ -103,7 +106,7 @@ function initTagDropDown() {
       let tags = responseJson.data.map(tag => tag.localization_names['en-us']).sort()
       tags.forEach(function(tag) {
         let newTagItem = document.createElement('div')
-        newTagItem.setAttribute('class', 'item')
+        newTagItem.classList.add('item')
         newTagItem.setAttribute('data-value', tag)
         newTagItem.innerText = tag;
 
@@ -130,7 +133,7 @@ function initCategoriesDropDown() {
       let categories = responseJson.data.map(category => category.name)
       categories.forEach(function(category, idx) {
         let newCategoryItem = document.createElement('div')
-        newCategoryItem.setAttribute('class', 'item')
+        newCategoryItem.classList.add('item')
         newCategoryItem.setAttribute('data-value', category)
         newCategoryItem.innerText = `${idx + 1}. ${category}`;
 
@@ -172,9 +175,26 @@ function init() {
 
   document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
     e.preventDefault()
-})
+  })
 }
 
 init()
 
+let dropdowns = document.getElementsByClassName('filter-menu')
 
+ Array.from(dropdowns).forEach(function(element) {
+      element.addEventListener('click', function(e) {
+        refreshMainContent()
+        searchStreams(e.target.dataset.value)
+      });
+    });
+
+
+function refreshMainContent() {
+  if (welcomeCard) {
+    welcomeCard.remove()
+  }
+  if (document.getElementsByTagName('iframe').length){
+    document.getElementsByTagName('iframe')[0].remove();
+  }
+}

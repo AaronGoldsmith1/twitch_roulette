@@ -43,20 +43,20 @@
           
           <h3 class="center-text">Top Categories</h3>
           <div class="ui fluid search selection dropdown">
-            <input type="hidden" name="country">
+            <input class="search-field" type="hidden" name="category">
             <i class="dropdown icon"></i>
             <div class="default text">Select Category</div>
-            <div id="category-menu" class="menu"></div>
+            <div id="category-menu" class="menu filter-menu"></div>
           </div>
           
           <div class="ui hidden divider"></div>
           
           <h3 class="center-text">Strem Tag</h3>
           <div class="ui fluid search selection dropdown">
-            <input type="hidden" name="country">
+            <input class="search-field" type="hidden" name="tag">
             <i class="dropdown icon"></i>
             <div class="default text">Select Tag</div>
-            <div id="tag-menu" class="menu"></div>
+            <div id="tag-menu" class="menu filter-menu"></div>
           </div>
         
         </div>
@@ -81,6 +81,11 @@
         </div>
       </div>
     </div>
-    <script>$('.ui.dropdown').dropdown()</script>
+    <script>
+    $('.ui.dropdown').dropdown()
+    $('.ui.dropdown').dropdown({
+      "clearable": true
+    });
+</script>
   </body>
 </html>
