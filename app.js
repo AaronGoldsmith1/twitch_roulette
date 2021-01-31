@@ -16,7 +16,8 @@ const searchInput = document.getElementById('search-input');
 const spinButtons = document.querySelectorAll('.spin');
 const welcomeCard = document.getElementById('welcome-card');
 
-const tagMenu = document.getElementById('tag-menu')
+const categoryMenu = document.getElementById('category-menu');
+const tagMenu = document.getElementById('tag-menu');
 
 function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
@@ -95,7 +96,7 @@ function initTagDropDown() {
     }
   });
 
-  fetch(request).then((response) => response.json())
+  return fetch(request).then((response) => response.json())
     .then((responseJson) => { 
       let tags = responseJson.data.map(tag => tag.localization_names['en-us'])
       tags.forEach(function(tag) {
@@ -106,7 +107,33 @@ function initTagDropDown() {
 
         tagMenu.appendChild(newTagItem)
       })
-      console.log(tags)
+    }).catch((error) => { 
+      console.error(error);
+    });
+
+}
+
+function initCategoriesDropDown() {
+  const request = new Request(topCategoriesUrl, { 
+    method: 'GET' ,
+    headers: {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${access_token}`,
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  });
+
+  fetch(request).then((response) => response.json())
+    .then((responseJson) => { 
+      let categories = responseJson.data.map(category => category.name)
+      categories.forEach(function(category, idx) {
+        let newCategoryItem = document.createElement('div')
+        newCategoryItem.setAttribute('class', 'item')
+        newCategoryItem.setAttribute('data-value', category)
+        newCategoryItem.innerText = `${idx + 1}. ${category}`;
+
+        categoryMenu.appendChild(newCategoryItem)
+      })
     }).catch((error) => { 
       console.error(error);
     });
@@ -114,7 +141,7 @@ function initTagDropDown() {
 }
 
 function init() {
-  getAccessToken().then(initTagDropDown)
+  getAccessToken().then(initTagDropDown).then(initCategoriesDropDown)
 
   searchButton.addEventListener('click', function(){
     if (welcomeCard) {
