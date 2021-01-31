@@ -3,11 +3,16 @@ const clientSecret = 'khcxdmodyqxoajyybl0mguqzmqjb6m';
 
 const tokenUrl = `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
 const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
+const searchStreamsUrl = `https://api.twitch.tv/helix/search/channels?live_only=true&first=100&query=`
 
 let access_token;
+let search_query;
 
+const searchButton = document.getElementById('search-button');
+const searchInput = document.getElementById('search-input');
 const spinButtons = document.querySelectorAll('.spin');
 const welcomeCard = document.getElementById('welcome-card');
+
 
 function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
