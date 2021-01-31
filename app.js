@@ -21,7 +21,7 @@ const tagMenu = document.getElementById('tag-menu')
 function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
 
-  fetch(request).then((response) => response.json())
+  return fetch(request).then((response) => response.json())
     .then((responseJson) => { 
       access_token = responseJson.access_token;
     }).catch((error) => { 
@@ -85,7 +85,7 @@ function searchStreams() {
 
 }
 
-function initDropDowns() {
+function initTagDropDown() {
   const request = new Request(topTagsUrl, { 
     method: 'GET' ,
     headers: {
@@ -114,7 +114,7 @@ function initDropDowns() {
 }
 
 function init() {
-  getAccessToken() 
+  getAccessToken().then(initTagDropDown)
 
   searchButton.addEventListener('click', function(){
     if (welcomeCard) {
