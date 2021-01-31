@@ -47,7 +47,7 @@ function getTopStreams() {
     
       new Twitch.Embed('twitch-embed', {
         width: '100%',
-        height: '100%',
+        height: '96%',
         theme: 'dark',
         channel: randomStream,
         parent: ['localhost']
@@ -77,7 +77,7 @@ function searchStreams(searchQuery) {
 
       new Twitch.Embed('twitch-embed', {
         width: '100%',
-        height: '100%',
+        height: '96%',
         theme: 'dark',
         channel: randomStream,
         parent: ['localhost']
