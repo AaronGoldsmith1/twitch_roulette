@@ -27,15 +27,19 @@
 
       <div class="three wide tablet only three wide computer only column" id="sidebar">
         <div class="ui vertical borderless fluid text menu">
-          <!-- <a class="active item">Overview</a> <a class="item">Reports</a>
-          <a class="item">Analytics</a> <a class="item">Export</a>
+          <h2 class="active item center-text">Stream Filters</h2>
+          <div class="ui divider"></div>
+          <h3 class="itemc center-text">Search Term</h3>
+          
+          <div class="ui fluid action input">
+          <input id="search-input" type="text" placeholder="Search...">
+          <button id="search-button" class="ui icon button"><i class="search icon"></i></button>
+          </div>
+
           <div class="ui hidden divider"></div>
-          <a class="item">Nav item</a> <a class="item">Nav item again</a>
-          <a class="item">One more nav</a> <a class="item">Another nav item</a>
-          <a class="item">More navigation</a>
+          <!-- dropdown -->
           <div class="ui hidden divider"></div>
-          <a class="item">Macintosh</a> <a class="item">Linux</a>
-          <a class="item">Windows</a> -->
+          <!-- dropdown -->
         </div>
       </div>
 
@@ -49,13 +53,12 @@
             <div class="ui divider"></div>
             
             <div class="ui medium header">Use this site to discover new streamers and make new friends.</div>
-            <div class="ui medium header">Click the spin button to see a random live stream from Twitch.tv!</div>
+            <div class="ui medium header">Click the spin button to see a random live stream from <a href="https://twitch.tv" rel="noreferrer">Twitch.tv!</a></div>
             <button class="massive ui primary button spin" id="main-spin-button">SPIN</button>
           
           </div>
         </div>
         <div id="twitch-embed"></div>
-    
 
         </div>
       </div>
