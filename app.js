@@ -11,6 +11,7 @@ let access_token;
 let searchEndpoint;
 let searchQuery;
 
+const dropdowns = document.getElementsByClassName('filter-menu')
 const searchButton = document.getElementById('search-button');
 const searchInput = document.getElementById('search-input');
 const spinButtons = document.querySelectorAll('.spin');
@@ -145,51 +146,6 @@ function initCategoriesDropDown() {
 
 }
 
-
-
-function init() {
-  getAccessToken().then(initTagDropDown).then(initCategoriesDropDown)
-
-  searchButton.addEventListener('click', function(){
-    if (welcomeCard) {
-        welcomeCard.remove()
-      }
-      if (document.getElementsByTagName('iframe').length){
-        document.getElementsByTagName('iframe')[0].remove();
-      }
-    searchStreams();
-    searchInput.value = '';
-  })
-
-  spinButtons.forEach(function(button) {
-    button.addEventListener('click', function(e) {
-      if (welcomeCard) {
-        welcomeCard.remove()
-      }
-      if (document.getElementsByTagName('iframe').length){
-        document.getElementsByTagName('iframe')[0].remove();
-      }
-      getTopStreams()
-    })
-  })
-
-  document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
-    e.preventDefault()
-  })
-}
-
-init()
-
-let dropdowns = document.getElementsByClassName('filter-menu')
-
- Array.from(dropdowns).forEach(function(element) {
-      element.addEventListener('click', function(e) {
-        refreshMainContent()
-        searchStreams(e.target.dataset.value)
-      });
-    });
-
-
 function refreshMainContent() {
   if (welcomeCard) {
     welcomeCard.remove()
@@ -198,3 +154,37 @@ function refreshMainContent() {
     document.getElementsByTagName('iframe')[0].remove();
   }
 }
+
+function init() {
+  getAccessToken().then(initTagDropDown).then(initCategoriesDropDown)
+
+  searchButton.addEventListener('click', function(){
+    refreshMainContent()
+    searchStreams();
+    searchInput.value = '';
+  })
+
+  spinButtons.forEach(function(button) {
+    button.addEventListener('click', function(e) {
+      refreshMainContent()
+      getTopStreams()
+    })
+  })
+
+   Array.from(dropdowns).forEach(function(element) {
+      element.addEventListener('click', function(e) {
+        refreshMainContent()
+        searchStreams(e.target.dataset.value)
+      });
+    });
+
+  document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
+    e.preventDefault()
+  })
+}
+
+init()
+
+
+
+
