@@ -2,6 +2,8 @@ const clientId = 'usg4v0i9m8c8ow94fj7w1w8jrywo9k';
 const clientSecret = 'khcxdmodyqxoajyybl0mguqzmqjb6m';
 
 const tokenUrl = `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
+const topCategoriesUrl = 'https://api.twitch.tv/helix/games/top?first=100';
+const topTagsUrl = 'https://api.twitch.tv/helix/tags/streams?first=100';
 const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
 const searchStreamsUrl = `https://api.twitch.tv/helix/search/channels?live_only=true&first=100&query=`
 
@@ -14,6 +16,7 @@ const searchInput = document.getElementById('search-input');
 const spinButtons = document.querySelectorAll('.spin');
 const welcomeCard = document.getElementById('welcome-card');
 
+const tagMenu = document.getElementById('tag-menu')
 
 function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
@@ -76,6 +79,34 @@ function searchStreams() {
         channel: randomStream,
         parent: ['localhost']
       });
+    }).catch((error) => { 
+      console.error(error);
+    });
+
+}
+
+function initDropDowns() {
+  const request = new Request(topTagsUrl, { 
+    method: 'GET' ,
+    headers: {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${access_token}`,
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  });
+
+  fetch(request).then((response) => response.json())
+    .then((responseJson) => { 
+      let tags = responseJson.data.map(tag => tag.localization_names['en-us'])
+      tags.forEach(function(tag) {
+        let newTagItem = document.createElement('div')
+        newTagItem.setAttribute('class', 'item')
+        newTagItem.setAttribute('data-value', tag)
+        newTagItem.innerText = tag;
+
+        tagMenu.appendChild(newTagItem)
+      })
+      console.log(tags)
     }).catch((error) => { 
       console.error(error);
     });
