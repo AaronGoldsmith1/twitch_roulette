@@ -7,7 +7,7 @@ const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
 let access_token;
 
 const spinButtons = document.querySelectorAll('.spin');
-const mainContent = document.getElementById('main-content');
+const welcomeCard = document.getElementById('welcome-card');
 
 function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
@@ -53,8 +53,11 @@ function init() {
 
   spinButtons.forEach(function(button) {
     button.addEventListener('click', function(e) {
-      if (mainContent) {
-        mainContent.remove()
+      if (welcomeCard) {
+        welcomeCard.remove()
+      }
+      if (document.getElementsByTagName('iframe').length){
+        document.getElementsByTagName('iframe')[0].remove();
       }
       getTopStreams()
     })

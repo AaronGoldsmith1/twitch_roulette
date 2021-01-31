@@ -12,6 +12,10 @@
     margin-top: 30px;
 }
 
+#twitch-embed {
+    width: 100%;
+}
+
 #sidebar {
     position: fixed;
     height: 100vh;
