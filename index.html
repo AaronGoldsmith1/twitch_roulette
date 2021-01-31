@@ -18,7 +18,7 @@
       <h3 class="header item">Twitch Roulette</h3>
       <div class="right menu">
         <div class="item">
-          <button class="ui button spin">SPIN!</button>
+          <button class="ui button primary spin">SPIN!</button>
         </div>
       </div>
     </div>
@@ -27,17 +27,19 @@
 
       <div class="three wide tablet only three wide computer only column" id="sidebar">
         <div class="ui vertical borderless fluid text menu">
-          <h2 class="active item center-text">Stream Filters</h2>
+          <h2 class="active center-text">Stream Filters</h2>
           <div class="ui divider"></div>
           <h3 class="itemc center-text">Search Term</h3>
           
+          <form>
           <div class="ui fluid action input">
             <input id="search-input" type="text" placeholder="Search...">
             <button id="search-button" class="ui icon button"><i class="search icon"></i></button>
           </div>
+        </form>
 
           <div class="ui hidden divider"></div>
-          <h3 class="center-text">Category</h3>
+          <h3 class="center-text">Top Categories</h3>
           <div class="ui fluid search selection dropdown">
             <input type="hidden" name="country">
             <i class="dropdown icon"></i>
@@ -45,7 +47,7 @@
             <div id="category-menu" class="menu"></div>
           </div>
           <div class="ui hidden divider"></div>
-          <h3 class="center-text">Tag</h3>
+          <h3 class="center-text">Strem Tag</h3>
           <div class="ui fluid search selection dropdown">
             <input type="hidden" name="country">
             <i class="dropdown icon"></i>
@@ -65,7 +67,7 @@
             <div class="ui divider"></div>
             
             <div class="ui medium header">Use this site to discover new streamers and make new friends.</div>
-            <div class="ui medium header">Click the spin button to see a random live stream from <a href="https://twitch.tv" rel="noreferrer">Twitch.tv!</a></div>
+            <div class="ui medium header">Click the spin button to see a random live stream from <a href="https://twitch.tv" rel="noreferrer">Twitch.tv</a></div>
             <button class="massive ui primary button spin" id="main-spin-button">SPIN</button>
           
           </div>

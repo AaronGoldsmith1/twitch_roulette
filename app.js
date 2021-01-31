@@ -48,6 +48,7 @@ function getTopStreams() {
       new Twitch.Embed('twitch-embed', {
         width: '100%',
         height: '100%',
+        theme: 'dark',
         channel: randomStream,
         parent: ['localhost']
       });
@@ -77,6 +78,7 @@ function searchStreams() {
       new Twitch.Embed('twitch-embed', {
         width: '100%',
         height: '100%',
+        theme: 'dark',
         channel: randomStream,
         parent: ['localhost']
       });
@@ -98,7 +100,7 @@ function initTagDropDown() {
 
   return fetch(request).then((response) => response.json())
     .then((responseJson) => { 
-      let tags = responseJson.data.map(tag => tag.localization_names['en-us'])
+      let tags = responseJson.data.map(tag => tag.localization_names['en-us']).sort()
       tags.forEach(function(tag) {
         let newTagItem = document.createElement('div')
         newTagItem.setAttribute('class', 'item')
@@ -140,6 +142,8 @@ function initCategoriesDropDown() {
 
 }
 
+
+
 function init() {
   getAccessToken().then(initTagDropDown).then(initCategoriesDropDown)
 
@@ -168,3 +172,8 @@ function init() {
 }
 
 init()
+
+
+document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
+  e.preventDefault()
+})
