@@ -36,8 +36,8 @@ function getTopStreams() {
       let randomStream = streams[Math.floor(Math.random()*streams.length)].user_name;
     
       new Twitch.Embed('twitch-embed', {
-        width: 800,
-        height: 500,
+        width: '100%',
+        height: '100%',
         channel: randomStream,
         parent: ['localhost']
       });
