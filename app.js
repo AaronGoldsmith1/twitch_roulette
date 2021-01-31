@@ -169,11 +169,12 @@ function init() {
       getTopStreams()
     })
   })
+
+  document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
+    e.preventDefault()
+})
 }
 
 init()
 
 
-document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
-  e.preventDefault()
-})
