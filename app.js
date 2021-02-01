@@ -192,3 +192,38 @@ function init() {
 
 init()
 
+async function getAllStreams (cursor, data = [], counter=3) {
+  while (counter !== 0) {
+    const request = new Request(topStreamsUrl, { 
+    method: 'GET' ,
+    headers: {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${access_token}`,
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+    });
+     return await fetch(request).then((response) => response.json()).then((responseJson) => { 
+      if (counter === 1 ) return data;
+      data.push(...responseJson.data);
+      console.log(responseJson.pagination.cursor)
+      return getAllStreams(responseJson.pagination.cursor, data, --counter);
+    }).catch((error) => { 
+      console.error(error);
+    });
+  }
+}
+// use it to get data
+// getAllStreams()
+// .then(data => console.log("final data:", data))
+
+
+// return fetch(('https://api.twitch.tv/helix/streams?first=100' + (cursor ? '&after=' + cursor : ''))
+//       .then((response) => response.json())
+//       .then()
+      
+//       {
+//         if (counter === 1 ) return data
+//         data.push(...response.data)
+//         return getAllStreams(response.pagination.cursor, data, counter--)
+//       })
+//   }
