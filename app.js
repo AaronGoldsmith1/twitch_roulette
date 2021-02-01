@@ -32,30 +32,17 @@ async function getAccessToken() {
 }
 
 function getTopStreams() {
-  const request = new Request(topStreamsUrl, { 
-    method: 'GET' ,
-    headers: {
-      'Client-ID': clientId,
-      'Authorization': `Bearer ${access_token}`,
-      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-    }
-  });
-
-  fetch(request).then((response) => response.json())
-    .then((responseJson) => { 
-      let streams = responseJson.data;
-      let randomStream = streams[Math.floor(Math.random()*streams.length)].user_name;
-    
-      new Twitch.Embed('twitch-embed', {
-        width: '100%',
-        height: '96%',
-        theme: 'dark',
-        channel: randomStream,
-        parent: ['localhost']
-      });
-    }).catch((error) => { 
-      console.error(error);
+  getAllStreams().then(function(allStreams) {
+    let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)].user_name;
+    console.log(allStreams)
+    new Twitch.Embed('twitch-embed', {
+      width: '100%',
+      height: '96%',
+      theme: 'dark',
+      channel: randomStream,
+      parent: ['localhost']
     });
+  });
 }
 
 function searchStreams(searchQuery) {
@@ -159,10 +146,12 @@ function refreshMainContent() {
 function init() {
   getAccessToken().then(initTagDropDown).then(initCategoriesDropDown)
 
-  searchButton.addEventListener('click', function() {
-    refreshMainContent()
-    searchStreams();
-    searchInput.value = '';
+  searchButton.addEventListener('click', function(e) {
+    if (searchInput.value) {
+      refreshMainContent()
+      searchStreams();
+      searchInput.value = '';
+    }
   })
 
   spinButtons.forEach(function(button) {
@@ -192,7 +181,7 @@ function init() {
 
 init()
 
-async function getAllStreams (cursor, data = [], counter=3) {
+async function getAllStreams (cursor, data = [], counter=10) {
   while (counter !== 0) {
     const request = new Request(topStreamsUrl  + (cursor ? '&after=' + cursor : ''), { 
     method: 'GET' ,
@@ -212,18 +201,4 @@ async function getAllStreams (cursor, data = [], counter=3) {
     });
   }
 }
-// use it to get data
-// getAllStreams()
-// .then(data => console.log("final data:", data))
 
-
-// return fetch(('https://api.twitch.tv/helix/streams?first=100' + (cursor ? '&after=' + cursor : ''))
-//       .then((response) => response.json())
-//       .then()
-      
-//       {
-//         if (counter === 1 ) return data
-//         data.push(...response.data)
-//         return getAllStreams(response.pagination.cursor, data, counter--)
-//       })
-//   }
