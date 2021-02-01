@@ -11,16 +11,13 @@ let access_token;
 let searchEndpoint;
 let searchQuery;
 
-let totalStreams = [];
-
+const categoryMenu = document.getElementById('category-menu');
 const dropdowns = document.getElementsByClassName('filter-menu')
 const searchButton = document.getElementById('search-button');
+const tagMenu = document.getElementById('tag-menu');
 const searchInput = document.getElementById('search-input');
 const spinButtons = document.querySelectorAll('.spin');
 const welcomeCard = document.getElementById('welcome-card');
-
-const categoryMenu = document.getElementById('category-menu');
-const tagMenu = document.getElementById('tag-menu');
 
 async function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
@@ -89,7 +86,7 @@ function searchStreams(searchQuery) {
     }).catch((error) => { 
       console.error(error);
     });
-    if(document.getElementsByClassName('clear')[0]) {
+    if  (document.getElementsByClassName('clear')[0]) {
       document.getElementsByClassName('clear')[0].click()
     }
   
@@ -185,54 +182,13 @@ function init() {
   document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
     e.preventDefault()
   })
+
+  document.body.addEventListener('click', function() {
+    if  (document.getElementsByClassName('clear')[0]) {
+      document.getElementsByClassName('clear')[0].click()
+    }
+  });
 }
 
 init()
 
-function getTopStreamsWithPagination() {
-  let numberOfRequests = 2
-  let paginationCursor;
-  let currentStreams;
-
-  while(numberOfRequests) {
-    console.log(numberOfRequests)
-    numberOfRequests--
-  }
-
-  
-  
-  let allStreamsUrlInfo = new URL(topStreamsUrl)
-  allStreamsUrlInfo.searchParams.delete('after')
-
-  if (paginationCursor) {
-    allStreamsUrlInfo.searchParams.append('after', paginationCursor)
-  }
-
-
-
-  let allStreamsUrl = allStreamsUrlInfo.href;
-
-  
-   const request = new Request(allStreamsUrl, { 
-    method: 'GET' ,
-    headers: {
-      'Client-ID': clientId,
-      'Authorization': `Bearer ${access_token}`,
-      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-    }
-   });
-
-
-   fetch(request).then((response) => response.json())
-    .then((responseJson) => { 
-      console.log(responseJson)
-
-      currentStreams = responseJson.data;
-      totalStreams = totalStreams.concat(currentStreams);
-      paginationCursor = responseJson.pagination.cursor
-    
-    }).catch((error) => { 
-      console.error(error);
-    });
-
-}
