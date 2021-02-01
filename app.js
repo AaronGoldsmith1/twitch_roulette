@@ -194,7 +194,7 @@ init()
 
 async function getAllStreams (cursor, data = [], counter=3) {
   while (counter !== 0) {
-    const request = new Request(topStreamsUrl, { 
+    const request = new Request(topStreamsUrl  + (cursor ? '&after=' + cursor : ''), { 
     method: 'GET' ,
     headers: {
       'Client-ID': clientId,
