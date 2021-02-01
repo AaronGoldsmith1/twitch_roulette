@@ -11,6 +11,7 @@ let access_token;
 let searchEndpoint;
 let searchQuery;
 
+const languageMenu = document.getElementById('language-menu');
 const categoryMenu = document.getElementById('category-menu');
 const dropdowns = document.getElementsByClassName('filter-menu')
 const searchButton = document.getElementById('search-button');
@@ -34,7 +35,6 @@ async function getAccessToken() {
 function getTopStreams() {
   getAllStreams().then(function(allStreams) {
     let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)].user_name;
-    console.log(allStreams)
     new Twitch.Embed('twitch-embed', {
       width: '100%',
       height: '96%',
@@ -134,6 +134,34 @@ function initCategoriesDropDown() {
 
 }
 
+function initLanguageDropDown(language) {
+  const request = new Request(topStreamsUrl  + `&language=${language}`, { 
+    method: 'GET' ,
+    headers: {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${access_token}`,
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+    });
+    
+    fetch(request).then((response) => response.json()).then((responseJson) => { 
+      let allStreams = responseJson.data;
+      let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)].user_name;
+
+    new Twitch.Embed('twitch-embed', {
+      width: '100%',
+      height: '96%',
+      theme: 'dark',
+      channel: randomStream,
+      parent: ['localhost']
+    });
+    }).catch((error) => { 
+      console.error(error);
+    });
+
+
+}
+
 function refreshMainContent() {
   if (welcomeCard) {
     welcomeCard.remove();
@@ -178,6 +206,20 @@ function init() {
       document.getElementsByClassName('clear')[0].click()
     }
   });
+
+  for (let key in LANGUAGES_LIST) {
+    let newLanguageItem = document.createElement('div')
+    newLanguageItem.classList.add('item')
+    newLanguageItem.setAttribute('data-value', key)
+    newLanguageItem.innerText = LANGUAGES_LIST[key];
+
+    languageMenu.appendChild(newLanguageItem)
+  }
+
+  languageMenu.addEventListener('click', function(e) {
+    refreshMainContent()
+    initLanguageDropDown(e.target.dataset.value)
+  });
 }
 
 init()
@@ -195,11 +237,9 @@ async function getAllStreams (cursor, data = [], counter=10) {
      return await fetch(request).then((response) => response.json()).then((responseJson) => { 
       if (counter === 1 ) return data;
       data.push(...responseJson.data);
-      console.log(responseJson.pagination.cursor)
       return getAllStreams(responseJson.pagination.cursor, data, --counter);
     }).catch((error) => { 
       console.error(error);
     });
   }
 }
-

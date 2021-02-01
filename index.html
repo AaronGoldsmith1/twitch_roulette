@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="languages.js"></script>
     <script src="app.js" defer></script>
     <script src="https://embed.twitch.tv/embed/v1.js"></script>
     <title>Twitch Roulette</title>
@@ -57,6 +58,16 @@
             <i class="dropdown icon"></i>
             <div class="default text">Select Tag</div>
             <div id="tag-menu" class="menu filter-menu"></div>
+          </div>
+
+          <div class="ui hidden divider"></div>
+
+          <h3 class="center-text">Language</h3>
+          <div class="ui fluid search selection dropdown">
+            <input class="search-field" type="hidden" name="language">
+            <i class="dropdown icon"></i>
+            <div class="default text">Select Language</div>
+            <div id="language-menu" class="menu"></div>
           </div>
         
         </div>
