@@ -35,6 +35,13 @@ body {
     text-align: center;
 }
 
+.footer {
+    height: 30px;
+    position: sticky;
+    bottom: 0px;
+    background-color:rgb(27, 28, 29) ;
+}
+
 .twitch {
     position: relative;
     left: 10px;

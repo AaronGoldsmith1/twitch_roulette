@@ -12,7 +12,7 @@ let searchEndpoint;
 let searchQuery;
 
 const languageMenu = document.getElementById('language-menu');
-let mainContent = document.getElementById('main-content');
+const mainContent = document.getElementById('main-content');
 const categoryMenu = document.getElementById('category-menu');
 const dropdowns = document.getElementsByClassName('filter-menu')
 const searchButton = document.getElementById('search-button');
@@ -33,7 +33,7 @@ async function getAccessToken() {
   }
 }
 
-async function getAllStreams (cursor, data = [], counter=10) {
+function getAllStreams (cursor, data = [], counter=10) {
   while (counter !== 0) {
     const request = new Request(topStreamsUrl  + (cursor ? '&after=' + cursor : ''), { 
     method: 'GET' ,
@@ -43,7 +43,7 @@ async function getAllStreams (cursor, data = [], counter=10) {
       'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
       }
     });
-     return await fetch(request).then((response) => response.json()).then((responseJson) => { 
+     return fetch(request).then((response) => response.json()).then((responseJson) => { 
       if (counter === 1 ) return data;
       data.push(...responseJson.data);
       return getAllStreams(responseJson.pagination.cursor, data, --counter);
@@ -63,7 +63,7 @@ function getTopStreams() {
     mainContent.removeChild(loader);
     new Twitch.Embed('twitch-embed', {
       width: '100%',
-      height: '96%',
+      height: '93%',
       theme: 'dark',
       channel: randomStream,
       parent: ['localhost']
@@ -91,7 +91,7 @@ function searchStreams(searchQuery) {
       
       new Twitch.Embed('twitch-embed', {
         width: '100%',
-        height: '96%',
+        height: '93%',
         theme: 'dark',
         channel: randomStream,
         parent: ['localhost']
@@ -176,7 +176,7 @@ function initLanguageDropDown(language) {
 
     new Twitch.Embed('twitch-embed', {
       width: '100%',
-      height: '96%',
+      height: '93%',
       theme: 'dark',
       channel: randomStream,
       parent: ['localhost']
