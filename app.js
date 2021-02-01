@@ -11,6 +11,8 @@ let access_token;
 let searchEndpoint;
 let searchQuery;
 
+let totalStreams = [];
+
 const dropdowns = document.getElementsByClassName('filter-menu')
 const searchButton = document.getElementById('search-button');
 const searchInput = document.getElementById('search-input');
@@ -186,3 +188,51 @@ function init() {
 }
 
 init()
+
+function getTopStreamsWithPagination() {
+  let numberOfRequests = 2
+  let paginationCursor;
+  let currentStreams;
+
+  while(numberOfRequests) {
+    console.log(numberOfRequests)
+    numberOfRequests--
+  }
+
+  
+  
+  let allStreamsUrlInfo = new URL(topStreamsUrl)
+  allStreamsUrlInfo.searchParams.delete('after')
+
+  if (paginationCursor) {
+    allStreamsUrlInfo.searchParams.append('after', paginationCursor)
+  }
+
+
+
+  let allStreamsUrl = allStreamsUrlInfo.href;
+
+  
+   const request = new Request(allStreamsUrl, { 
+    method: 'GET' ,
+    headers: {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${access_token}`,
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+   });
+
+
+   fetch(request).then((response) => response.json())
+    .then((responseJson) => { 
+      console.log(responseJson)
+
+      currentStreams = responseJson.data;
+      totalStreams = totalStreams.concat(currentStreams);
+      paginationCursor = responseJson.pagination.cursor
+    
+    }).catch((error) => { 
+      console.error(error);
+    });
+
+}
