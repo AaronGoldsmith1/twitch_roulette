@@ -20,15 +20,16 @@ const welcomeCard = document.getElementById('welcome-card');
 const categoryMenu = document.getElementById('category-menu');
 const tagMenu = document.getElementById('tag-menu');
 
-function getAccessToken() {
+async function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
 
-  return fetch(request).then((response) => response.json())
-    .then((responseJson) => { 
-      access_token = responseJson.access_token;
-    }).catch((error) => { 
-      console.error(error);
-    });
+  try {
+    const response = await fetch(request);
+    const responseJson = await response.json();
+    access_token = responseJson.access_token;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function getTopStreams() {
