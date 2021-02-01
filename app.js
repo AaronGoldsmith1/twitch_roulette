@@ -1,11 +1,11 @@
 const clientId = 'usg4v0i9m8c8ow94fj7w1w8jrywo9k';
 const clientSecret = 'khcxdmodyqxoajyybl0mguqzmqjb6m';
 
+const searchStreamsUrl = `https://api.twitch.tv/helix/search/channels?live_only=true&first=100&query=`
 const tokenUrl = `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
 const topCategoriesUrl = 'https://api.twitch.tv/helix/games/top?first=100';
-const topTagsUrl = 'https://api.twitch.tv/helix/tags/streams?first=100';
 const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
-const searchStreamsUrl = `https://api.twitch.tv/helix/search/channels?live_only=true&first=100&query=`
+const topTagsUrl = 'https://api.twitch.tv/helix/tags/streams?first=100';
 
 let access_token;
 let searchEndpoint;
@@ -148,9 +148,10 @@ function initCategoriesDropDown() {
 
 function refreshMainContent() {
   if (welcomeCard) {
-    welcomeCard.remove()
+    welcomeCard.remove();
   }
-  if (document.getElementsByTagName('iframe').length){
+  
+  if (document.getElementsByTagName('iframe').length) {
     document.getElementsByTagName('iframe')[0].remove();
   }
 }
@@ -158,7 +159,7 @@ function refreshMainContent() {
 function init() {
   getAccessToken().then(initTagDropDown).then(initCategoriesDropDown)
 
-  searchButton.addEventListener('click', function(){
+  searchButton.addEventListener('click', function() {
     refreshMainContent()
     searchStreams();
     searchInput.value = '';
@@ -184,7 +185,3 @@ function init() {
 }
 
 init()
-
-
-
-
