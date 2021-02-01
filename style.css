@@ -2,16 +2,6 @@ body {
     overflow-y: hidden;
 }
 
-.center-text {
-    text-align: center;
-}
-
-.twitch {
-  position: relative;
-  left: 10px;
-  top: 15px;
-}
-
 #main-content {
     height: 100vh;
 }
@@ -24,7 +14,6 @@ body {
     width: 100%;
     padding-left: 10px;
     padding-right: inherit;
-
 }
 
 #sidebar {
@@ -40,6 +29,16 @@ body {
     margin: 0 auto;
     top: 100px;
     text-align: center;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.twitch {
+    position: relative;
+    left: 10px;
+    top: 15px;
 }
 
 @media only screen and (max-width: 560px) {
