@@ -20,7 +20,7 @@ body {
     position: fixed;
     height: 100vh;
     padding-top: 68px;
-    padding-right: 0;
+    /* padding-right: 0; */
 }
 
 #welcome-card {
@@ -40,6 +40,10 @@ body {
     position: sticky;
     bottom: 0px;
     background-color:rgb(27, 28, 29) ;
+}
+
+.padding-right {
+    padding-right: 20px;
 }
 
 .twitch {

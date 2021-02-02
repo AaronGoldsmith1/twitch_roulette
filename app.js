@@ -7,10 +7,6 @@ const topCategoriesUrl = 'https://api.twitch.tv/helix/games/top?first=100';
 const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
 const topTagsUrl = 'https://api.twitch.tv/helix/tags/streams?first=100';
 
-let access_token;
-let searchEndpoint;
-let searchQuery;
-
 const languageMenu = document.getElementById('language-menu');
 const mainContent = document.getElementById('main-content');
 const categoryMenu = document.getElementById('category-menu');
@@ -20,6 +16,10 @@ const tagMenu = document.getElementById('tag-menu');
 const searchInput = document.getElementById('search-input');
 const spinButtons = document.querySelectorAll('.spin');
 const welcomeCard = document.getElementById('welcome-card');
+
+let access_token;
+let searchEndpoint;
+let searchQuery;
 
 async function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
@@ -185,8 +185,6 @@ function initLanguageDropDown(language) {
       getTopStreams()
       console.error(error);
     });
-
-
 }
 
 function refreshMainContent() {
@@ -252,3 +250,21 @@ function init() {
 init()
 
 
+let mainGrid = document.getElementById('main-grid');
+let sideBar = document.getElementById('sidebar');
+
+function toggleDarkLightModes() {
+  let iframe = document.getElementsByTagName('iframe')[0]
+
+  if (iframe.src.indexOf('dark') === -1 ) {
+    iframe.src = iframe.src.replace(/light/g, 'dark')
+    // mainGrid.classList.add('inverted', 'segment')
+    // sideBar.classList.add('padding-right');
+  } else {
+    iframe.src = iframe.src.replace(/dark/g, 'light')
+    // mainGrid.classList.remove('inverted', 'segment');
+    // sideBar.classList.remove('padding-right');
+  }
+ 
+
+}
