@@ -40,5 +40,4 @@ const UI = function() {
     refreshMainContent, 
     toggleDarkMode
   };
-
 }();

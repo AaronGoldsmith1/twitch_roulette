@@ -79,6 +79,60 @@ function getTopStreams() {
 
 }
 
+function getStreamTags() {
+  const request = new Request(topTagsUrl, { 
+    method: 'GET' ,
+    headers: {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${access_token}`,
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  });
+
+  return fetch(request).then((response) => response.json())
+    .then((responseJson) => { 
+      let tags = responseJson.data.map(tag => tag.localization_names['en-us']).sort()
+      tags.forEach(function(tag) {
+        let newTagItem = document.createElement('div')
+        newTagItem.classList.add('item')
+        newTagItem.setAttribute('data-value', tag)
+        newTagItem.innerText = tag;
+
+        tagMenu.appendChild(newTagItem)
+      })
+    }).catch((error) => { 
+      console.error(error);
+    });
+
+}
+
+function getStreamCategories() {
+  const request = new Request(topCategoriesUrl, { 
+    method: 'GET' ,
+    headers: {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${access_token}`,
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  });
+
+  fetch(request).then((response) => response.json())
+    .then((responseJson) => { 
+      let categories = responseJson.data.map(category => category.name)
+      categories.forEach(function(category, idx) {
+        let newCategoryItem = document.createElement('div')
+        newCategoryItem.classList.add('item')
+        newCategoryItem.setAttribute('data-value', category)
+        newCategoryItem.innerText = `${idx + 1}. ${category}`;
+
+        categoryMenu.appendChild(newCategoryItem)
+      })
+    }).catch((error) => { 
+      console.error(error);
+    });
+
+}
+
 function searchStreams(searchQuery) {
   searchQuery = searchQuery ? searchQuery : searchInput.value;
   searchEndPoint = searchStreamsUrl + searchQuery;
@@ -107,61 +161,7 @@ function searchStreams(searchQuery) {
   
 }
 
-function initTagDropDown() {
-  const request = new Request(topTagsUrl, { 
-    method: 'GET' ,
-    headers: {
-      'Client-ID': clientId,
-      'Authorization': `Bearer ${access_token}`,
-      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-    }
-  });
-
-  return fetch(request).then((response) => response.json())
-    .then((responseJson) => { 
-      let tags = responseJson.data.map(tag => tag.localization_names['en-us']).sort()
-      tags.forEach(function(tag) {
-        let newTagItem = document.createElement('div')
-        newTagItem.classList.add('item')
-        newTagItem.setAttribute('data-value', tag)
-        newTagItem.innerText = tag;
-
-        tagMenu.appendChild(newTagItem)
-      })
-    }).catch((error) => { 
-      console.error(error);
-    });
-
-}
-
-function initCategoriesDropDown() {
-  const request = new Request(topCategoriesUrl, { 
-    method: 'GET' ,
-    headers: {
-      'Client-ID': clientId,
-      'Authorization': `Bearer ${access_token}`,
-      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-    }
-  });
-
-  fetch(request).then((response) => response.json())
-    .then((responseJson) => { 
-      let categories = responseJson.data.map(category => category.name)
-      categories.forEach(function(category, idx) {
-        let newCategoryItem = document.createElement('div')
-        newCategoryItem.classList.add('item')
-        newCategoryItem.setAttribute('data-value', category)
-        newCategoryItem.innerText = `${idx + 1}. ${category}`;
-
-        categoryMenu.appendChild(newCategoryItem)
-      })
-    }).catch((error) => { 
-      console.error(error);
-    });
-
-}
-
-function initLanguageDropDown(language) {
+function searchStreamByLanguage(language) {
   const request = new Request(topStreamsUrl  + `&language=${language}`, { 
     method: 'GET' ,
     headers: {
@@ -182,7 +182,7 @@ function initLanguageDropDown(language) {
 }
 
 function init() {
-  getAccessToken().then(initTagDropDown).then(initCategoriesDropDown)
+  getAccessToken().then(getStreamTags).then(getStreamCategories)
 
   searchButton.addEventListener('click', function(e) {
     if (searchInput.value) {
@@ -214,7 +214,7 @@ function init() {
 
   languageMenu.addEventListener('click', function(e) {
     refreshMainContent()
-    initLanguageDropDown(e.target.dataset.value)
+    searchStreamByLanguage(e.target.dataset.value)
   });
 
   document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
