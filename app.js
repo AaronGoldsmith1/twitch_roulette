@@ -32,13 +32,9 @@ function toggleDarkMode() {
   if (iframe.src.indexOf('dark') === -1 ) {
     iframe.src = iframe.src.replace(/light/g, 'dark')
     localStorage.setItem('darkmode', 'dark');
-    // mainGrid.classList.add('inverted', 'segment')
-    // sideBar.classList.add('padding-right');
   } else {
     iframe.src = iframe.src.replace(/dark/g, 'light')
     localStorage.setItem('darkmode', 'light')
-    // mainGrid.classList.remove('inverted', 'segment');
-    // sideBar.classList.remove('padding-right');
   }
 }
 
