@@ -1,7 +1,8 @@
 $('.ui.dropdown').dropdown({
-  'clearable': true,
-  'forceSelection': false,
-  'keys': {
+  clearable: true,
+  keys: {
       enter: ''
-  }
+  },
+  forceSelection: false,
+  fullTextSearch: true
 });

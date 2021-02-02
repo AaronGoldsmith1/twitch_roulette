@@ -190,11 +190,11 @@ function init() {
     });
   });
 
-//  document.body.addEventListener('click', function() {
-//     if (document.getElementsByClassName('clear')[0]) {
-//       document.getElementsByClassName('clear')[0].click()
-//     }
-//   });
+ document.body.addEventListener('click', function() {
+    if (document.getElementsByClassName('clear')[0]) {
+      document.getElementsByClassName('clear')[0].click()
+    }
+  });
 
   languageMenu.addEventListener('click', function(e) {
     refreshMainContent()
