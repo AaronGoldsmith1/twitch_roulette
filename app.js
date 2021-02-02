@@ -186,7 +186,7 @@ function init() {
 
   searchButton.addEventListener('click', function(e) {
     if (searchInput.value) {
-      UI.refreshMainContent()
+      refreshMainContent()
       searchStreams();
       searchInput.value = '';
     }
@@ -194,14 +194,14 @@ function init() {
 
   spinButtons.forEach(function(button) {
     button.addEventListener('click', function(e) {
-      UI.refreshMainContent()
+      refreshMainContent()
       getTopStreams()
     })
   })
 
   Array.from(dropdowns).forEach(function(element) {
     element.addEventListener('click', function(e) {
-      UI.refreshMainContent()
+      refreshMainContent()
       searchStreams(e.target.dataset.value)
     });
   });
@@ -213,7 +213,7 @@ function init() {
   });
 
   languageMenu.addEventListener('click', function(e) {
-    UI.refreshMainContent()
+    refreshMainContent()
     initLanguageDropDown(e.target.dataset.value)
   });
 
@@ -223,7 +223,7 @@ function init() {
 
   document.getElementById('darkmode-checkbox').addEventListener('click', toggleDarkMode)
   localStorage.setItem('darkmode', 'light');
-  UI.populateLanguageDropdown();
+  populateLanguageDropdown();
 }
 
 init();
