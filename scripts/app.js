@@ -1,5 +1,4 @@
 const { embedTwitch, populateLanguageDropdown, refreshMainContent, toggleDarkMode } = UI;
-
 const clientId = 'usg4v0i9m8c8ow94fj7w1w8jrywo9k';
 const clientSecret = 'khcxdmodyqxoajyybl0mguqzmqjb6m';
 
@@ -168,44 +167,44 @@ function searchStreamByLanguage(language) {
 }
 
 function init() {
-  getAccessToken().then(getStreamTags).then(getStreamCategories)
+  getAccessToken().then(getStreamTags).then(getStreamCategories);
 
   searchButton.addEventListener('click', function(e) {
     if (searchInput.value) {
-      refreshMainContent()
+      refreshMainContent();
       searchStreams();
       searchInput.value = '';
     }
-  })
+  });
 
   spinButtons.forEach(function(button) {
     button.addEventListener('click', function(e) {
-      refreshMainContent()
-      getTopStreams()
-    })
-  })
+      refreshMainContent();
+      getTopStreams();
+    });
+  });
 
   Array.from(dropdowns).forEach(function(element) {
     element.addEventListener('click', function(e) {
-      refreshMainContent()
-      searchStreams(e.target.dataset.value)
+      refreshMainContent();
+      searchStreams(e.target.dataset.value);
     });
   });
 
  document.body.addEventListener('click', function() {
     if (document.getElementsByClassName('clear')[0]) {
-      document.getElementsByClassName('clear')[0].click()
+      document.getElementsByClassName('clear')[0].click();
     }
   });
 
   languageMenu.addEventListener('click', function(e) {
-    refreshMainContent()
-    searchStreamByLanguage(e.target.dataset.value)
+    refreshMainContent();
+    searchStreamByLanguage(e.target.dataset.value);
   });
 
   document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
-    e.preventDefault()
-  })
+    e.preventDefault();
+  });
 
   document.getElementById('darkmode-checkbox').addEventListener('click', toggleDarkMode)
   localStorage.setItem('darkmode', 'light');
