@@ -38,6 +38,16 @@ function toggleDarkMode() {
   }
 }
 
+function embedTwitch(randomStream) {
+  new Twitch.Embed('twitch-embed', {
+    width: '100%',
+    height: '93%',
+    theme: localStorage.getItem('darkmode'),
+    channel: randomStream,
+    parent: ['localhost']
+  });
+}
+
 async function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
 
@@ -78,14 +88,9 @@ function getTopStreams() {
   getAllStreams().then(function(allStreams) {
     let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)].user_name;
     mainContent.removeChild(loader);
-    new Twitch.Embed('twitch-embed', {
-      width: '100%',
-      height: '93%',
-      theme: localStorage.getItem('darkmode'),
-      channel: randomStream,
-      parent: ['localhost']
-    });
+    embedTwitch(randomStream)
   });
+
 }
 
 function searchStreams(searchQuery) {
@@ -105,14 +110,7 @@ function searchStreams(searchQuery) {
     .then((responseJson) => { 
       let streams = responseJson.data;
       let randomStream = streams[Math.floor(Math.random()*streams.length)]?.display_name;
-      
-      new Twitch.Embed('twitch-embed', {
-        width: '100%',
-        height: '93%',
-        theme: localStorage.getItem('darkmode'),
-        channel: randomStream,
-        parent: ['localhost']
-      });
+      embedTwitch(randomStream)
     }).catch((error) => { 
       getTopStreams()
       console.error(error);
@@ -190,14 +188,7 @@ function initLanguageDropDown(language) {
     fetch(request).then((response) => response.json()).then((responseJson) => { 
       let allStreams = responseJson.data;
       let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)].user_name;
-
-    new Twitch.Embed('twitch-embed', {
-      width: '100%',
-      height: '93%',
-      theme: localStorage.getItem('darkmode'),
-      channel: randomStream,
-      parent: ['localhost']
-    });
+      embedTwitch(randomStream)
     }).catch((error) => { 
       getTopStreams()
       console.error(error);
@@ -270,11 +261,3 @@ function init() {
 }
 
 init()
-
-
-
-
-
-
-
-
