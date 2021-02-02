@@ -2,6 +2,10 @@ body {
     overflow-y: hidden;
 }
 
+#darkmode-toggle {
+    visibility: hidden;
+}
+
 #main-content {
     height: 100vh;
 }

@@ -18,9 +18,29 @@ const searchInput = document.getElementById('search-input');
 const spinButtons = document.querySelectorAll('.spin');
 const welcomeCard = document.getElementById('welcome-card');
 
+let mainGrid = document.getElementById('main-grid');
+let sideBar = document.getElementById('sidebar');
+
+
 let access_token;
 let searchEndpoint;
 let searchQuery;
+
+function toggleDarkMode() {
+  let iframe = document.getElementsByTagName('iframe')[0]
+
+  if (iframe.src.indexOf('dark') === -1 ) {
+    iframe.src = iframe.src.replace(/light/g, 'dark')
+    localStorage.setItem('darkmode', 'dark');
+    // mainGrid.classList.add('inverted', 'segment')
+    // sideBar.classList.add('padding-right');
+  } else {
+    iframe.src = iframe.src.replace(/dark/g, 'light')
+    localStorage.setItem('darkmode', 'light')
+    // mainGrid.classList.remove('inverted', 'segment');
+    // sideBar.classList.remove('padding-right');
+  }
+}
 
 async function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
@@ -65,7 +85,7 @@ function getTopStreams() {
     new Twitch.Embed('twitch-embed', {
       width: '100%',
       height: '93%',
-      theme: 'light',
+      theme: localStorage.getItem('darkmode'),
       channel: randomStream,
       parent: ['localhost']
     });
@@ -93,7 +113,7 @@ function searchStreams(searchQuery) {
       new Twitch.Embed('twitch-embed', {
         width: '100%',
         height: '93%',
-        theme: 'light',
+        theme: localStorage.getItem('darkmode'),
         channel: randomStream,
         parent: ['localhost']
       });
@@ -178,7 +198,7 @@ function initLanguageDropDown(language) {
     new Twitch.Embed('twitch-embed', {
       width: '100%',
       height: '93%',
-      theme: 'light',
+      theme: localStorage.getItem('darkmode'),
       channel: randomStream,
       parent: ['localhost']
     });
@@ -196,6 +216,8 @@ function refreshMainContent() {
   if (document.getElementsByTagName('iframe').length) {
     document.getElementsByTagName('iframe')[0].remove();
   }
+
+  darkModeToggle.style['visibility'] = 'visible';
 }
 
 function init() {
@@ -247,7 +269,8 @@ function init() {
     initLanguageDropDown(e.target.dataset.value)
   });
 
-  darkModeToggle.addEventListener('click', toggleDarkLightModes)
+  document.getElementById('darkmode-checkbox').addEventListener('click', toggleDarkMode)
+  localStorage.setItem('darkmode', 'light')
 }
 
 init()
@@ -255,19 +278,7 @@ init()
 
 
 
-let mainGrid = document.getElementById('main-grid');
-let sideBar = document.getElementById('sidebar');
 
-function toggleDarkLightModes() {
-  let iframe = document.getElementsByTagName('iframe')[0]
 
-  if (iframe.src.indexOf('dark') === -1 ) {
-    iframe.src = iframe.src.replace(/light/g, 'dark')
-    // mainGrid.classList.add('inverted', 'segment')
-    // sideBar.classList.add('padding-right');
-  } else {
-    iframe.src = iframe.src.replace(/dark/g, 'light')
-    // mainGrid.classList.remove('inverted', 'segment');
-    // sideBar.classList.remove('padding-right');
-  }
-}
+
+
