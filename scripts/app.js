@@ -1,4 +1,4 @@
-const { populateLanguageDropdown, refreshMainContent, toggleDarkMode } = UI;
+const { embedTwitch, populateLanguageDropdown, refreshMainContent, toggleDarkMode } = UI;
 
 const clientId = 'usg4v0i9m8c8ow94fj7w1w8jrywo9k';
 const clientSecret = 'khcxdmodyqxoajyybl0mguqzmqjb6m';
@@ -23,16 +23,6 @@ const welcomeCard = document.getElementById('welcome-card');
 let access_token;
 let searchEndpoint;
 let searchQuery;
-
-function embedTwitch(randomStream) {
-  new Twitch.Embed('twitch-embed', {
-    width: '100%',
-    height: '93%',
-    theme: localStorage.getItem('darkmode'),
-    channel: randomStream,
-    parent: ['localhost']
-  });
-}
 
 async function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });

@@ -1,4 +1,14 @@
 const UI = function() {
+
+  function embedTwitch(randomStream) {
+    new Twitch.Embed('twitch-embed', {
+      width: '100%',
+      height: '93%',
+      theme: localStorage.getItem('darkmode'),
+      channel: randomStream,
+      parent: ['localhost']
+    });
+}
   
   function populateLanguageDropdown() {
     for (let key in LANGUAGES_LIST) {
@@ -36,6 +46,7 @@ const UI = function() {
   }
 
   return {
+    embedTwitch,
     populateLanguageDropdown,
     refreshMainContent, 
     toggleDarkMode
