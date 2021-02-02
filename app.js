@@ -18,25 +18,9 @@ const searchInput = document.getElementById('search-input');
 const spinButtons = document.querySelectorAll('.spin');
 const welcomeCard = document.getElementById('welcome-card');
 
-let mainGrid = document.getElementById('main-grid');
-let sideBar = document.getElementById('sidebar');
-
-
 let access_token;
 let searchEndpoint;
 let searchQuery;
-
-function toggleDarkMode() {
-  let iframe = document.getElementsByTagName('iframe')[0]
-
-  if (iframe.src.indexOf('dark') === -1 ) {
-    iframe.src = iframe.src.replace(/light/g, 'dark')
-    localStorage.setItem('darkmode', 'dark');
-  } else {
-    iframe.src = iframe.src.replace(/dark/g, 'light')
-    localStorage.setItem('darkmode', 'light')
-  }
-}
 
 function embedTwitch(randomStream) {
   new Twitch.Embed('twitch-embed', {
@@ -195,24 +179,12 @@ function initLanguageDropDown(language) {
     });
 }
 
-function refreshMainContent() {
-  if (welcomeCard) {
-    welcomeCard.remove();
-  }
-  
-  if (document.getElementsByTagName('iframe').length) {
-    document.getElementsByTagName('iframe')[0].remove();
-  }
-
-  darkModeToggle.style['visibility'] = 'visible';
-}
-
 function init() {
   getAccessToken().then(initTagDropDown).then(initCategoriesDropDown)
 
   searchButton.addEventListener('click', function(e) {
     if (searchInput.value) {
-      refreshMainContent()
+      UI.refreshMainContent()
       searchStreams();
       searchInput.value = '';
     }
@@ -220,44 +192,36 @@ function init() {
 
   spinButtons.forEach(function(button) {
     button.addEventListener('click', function(e) {
-      refreshMainContent()
+      UI.refreshMainContent()
       getTopStreams()
     })
   })
 
-   Array.from(dropdowns).forEach(function(element) {
-      element.addEventListener('click', function(e) {
-        refreshMainContent()
-        searchStreams(e.target.dataset.value)
-      });
+  Array.from(dropdowns).forEach(function(element) {
+    element.addEventListener('click', function(e) {
+      UI.refreshMainContent()
+      searchStreams(e.target.dataset.value)
     });
+  });
+
+ document.body.addEventListener('click', function() {
+    if (document.getElementsByClassName('clear')[0]) {
+      document.getElementsByClassName('clear')[0].click()
+    }
+  });
+
+  languageMenu.addEventListener('click', function(e) {
+    UI.refreshMainContent()
+    initLanguageDropDown(e.target.dataset.value)
+  });
 
   document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
     e.preventDefault()
   })
 
-  document.body.addEventListener('click', function() {
-    if  (document.getElementsByClassName('clear')[0]) {
-      document.getElementsByClassName('clear')[0].click()
-    }
-  });
-
-  for (let key in LANGUAGES_LIST) {
-    let newLanguageItem = document.createElement('div')
-    newLanguageItem.classList.add('item')
-    newLanguageItem.setAttribute('data-value', key)
-    newLanguageItem.innerText = LANGUAGES_LIST[key];
-
-    languageMenu.appendChild(newLanguageItem)
-  }
-
-  languageMenu.addEventListener('click', function(e) {
-    refreshMainContent()
-    initLanguageDropDown(e.target.dataset.value)
-  });
-
-  document.getElementById('darkmode-checkbox').addEventListener('click', toggleDarkMode)
-  localStorage.setItem('darkmode', 'light')
+  document.getElementById('darkmode-checkbox').addEventListener('click', UI.toggleDarkMode)
+  localStorage.setItem('darkmode', 'light');
+  populateLanguageDropdown();
 }
 
-init()
+init();
