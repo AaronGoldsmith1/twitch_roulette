@@ -10,6 +10,11 @@ body {
     height: 100vh;
 }
 
+#main-header {
+    background-color: #000000;
+    background-image: linear-gradient(170deg, #000000 0%, #414141 74%);
+}
+
 #main-spin-button {
     margin-top: 30px;
 }
@@ -43,7 +48,8 @@ body {
     height: 30px;
     position: sticky;
     bottom: 0px;
-    background-color:rgb(27, 28, 29) ;
+    background-color: #000000;
+    background-image: linear-gradient(170deg, #000000 0%, #414141 74%);
 }
 
 .twitch {
