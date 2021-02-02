@@ -1,4 +1,4 @@
-const LANGUAGES_LIST = {
+const languages = {
   aa: 'Afar',
   ab: 'Abkhaz',
   ae: 'Avestan',

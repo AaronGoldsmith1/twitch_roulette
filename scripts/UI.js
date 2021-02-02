@@ -11,11 +11,11 @@ const UI = function() {
 }
   
   function populateLanguageDropdown() {
-    for (let key in LANGUAGES_LIST) {
+    for (let key in languages) {
       let newLanguageItem = document.createElement('div')
       newLanguageItem.classList.add('item')
       newLanguageItem.setAttribute('data-value', key)
-      newLanguageItem.innerText = LANGUAGES_LIST[key];
+      newLanguageItem.innerText = languages[key];
   
       languageMenu.appendChild(newLanguageItem)
     }

@@ -47,7 +47,7 @@ function getAllStreams (cursor, data = [], counter = 11) {
       }
     });
       return fetch(request).then((response) => response.json()).then((responseJson) => { 
-        if (counter === 1 ) return data;
+        if (counter === 1) return data;
         data.push(...responseJson.data);
         return getAllStreams(responseJson.pagination.cursor, data, --counter);
     }).catch((error) => { 
@@ -145,10 +145,6 @@ function searchStreams(searchQuery) {
       getTopStreams()
       console.error(error);
     });
-    if  (document.getElementsByClassName('clear')[0]) {
-      document.getElementsByClassName('clear')[0].click()
-    }
-  
 }
 
 function searchStreamByLanguage(language) {
