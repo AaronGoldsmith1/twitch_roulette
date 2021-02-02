@@ -1,41 +1,44 @@
-function populateLanguageDropdown() {
-   for (let key in LANGUAGES_LIST) {
-    let newLanguageItem = document.createElement('div')
-    newLanguageItem.classList.add('item')
-    newLanguageItem.setAttribute('data-value', key)
-    newLanguageItem.innerText = LANGUAGES_LIST[key];
-    
-    languageMenu.appendChild(newLanguageItem)
-  }
-}
-
-function refreshMainContent() {
-  if (welcomeCard) {
-    welcomeCard.remove();
-  }
+const UI = function() {
   
-  if (document.getElementsByTagName('iframe').length) {
-    document.getElementsByTagName('iframe')[0].remove();
+  function populateLanguageDropdown() {
+    for (let key in LANGUAGES_LIST) {
+      let newLanguageItem = document.createElement('div')
+      newLanguageItem.classList.add('item')
+      newLanguageItem.setAttribute('data-value', key)
+      newLanguageItem.innerText = LANGUAGES_LIST[key];
+  
+      languageMenu.appendChild(newLanguageItem)
+    }
   }
 
-  darkModeToggle.style['visibility'] = 'visible';
-}
+  function refreshMainContent() {
+    if (welcomeCard) {
+      welcomeCard.remove();
+    }
+    
+    if (document.getElementsByTagName('iframe').length) {
+      document.getElementsByTagName('iframe')[0].remove();
+    }
 
-function toggleDarkMode() {
-  let iframe = document.getElementsByTagName('iframe')[0]
-
-  if (iframe.src.indexOf('dark') === -1 ) {
-    iframe.src = iframe.src.replace(/light/g, 'dark')
-    localStorage.setItem('darkmode', 'dark');
-  } else {
-    iframe.src = iframe.src.replace(/dark/g, 'light')
-    localStorage.setItem('darkmode', 'light')
+    darkModeToggle.style['visibility'] = 'visible';
   }
-}
 
-const UI = {
-  populateLanguageDropdown,
-  refreshMainContent, 
-  toggleDarkMode
-};
+  function toggleDarkMode() {
+    let iframe = document.getElementsByTagName('iframe')[0]
 
+    if (iframe.src.indexOf('dark') === -1 ) {
+      iframe.src = iframe.src.replace(/light/g, 'dark')
+      localStorage.setItem('darkmode', 'dark');
+    } else {
+      iframe.src = iframe.src.replace(/dark/g, 'light')
+      localStorage.setItem('darkmode', 'light')
+    }
+  }
+
+  return {
+    populateLanguageDropdown,
+    refreshMainContent, 
+    toggleDarkMode
+  };
+
+}();

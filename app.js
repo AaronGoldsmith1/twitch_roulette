@@ -1,3 +1,5 @@
+const { populateLanguageDropdown, refreshMainContent, toggleDarkMode } = UI;
+
 const clientId = 'usg4v0i9m8c8ow94fj7w1w8jrywo9k';
 const clientSecret = 'khcxdmodyqxoajyybl0mguqzmqjb6m';
 
@@ -44,7 +46,7 @@ async function getAccessToken() {
   }
 }
 
-function getAllStreams (cursor, data = [], counter=10) {
+function getAllStreams (cursor, data = [], counter = 11) {
   while (counter !== 0) {
     const request = new Request(topStreamsUrl  + (cursor ? '&after=' + cursor : ''), { 
     method: 'GET' ,
@@ -54,10 +56,10 @@ function getAllStreams (cursor, data = [], counter=10) {
       'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
       }
     });
-     return fetch(request).then((response) => response.json()).then((responseJson) => { 
-      if (counter === 1 ) return data;
-      data.push(...responseJson.data);
-      return getAllStreams(responseJson.pagination.cursor, data, --counter);
+      return fetch(request).then((response) => response.json()).then((responseJson) => { 
+        if (counter === 1 ) return data;
+        data.push(...responseJson.data);
+        return getAllStreams(responseJson.pagination.cursor, data, --counter);
     }).catch((error) => { 
       console.error(error);
     });
@@ -219,9 +221,9 @@ function init() {
     e.preventDefault()
   })
 
-  document.getElementById('darkmode-checkbox').addEventListener('click', UI.toggleDarkMode)
+  document.getElementById('darkmode-checkbox').addEventListener('click', toggleDarkMode)
   localStorage.setItem('darkmode', 'light');
-  populateLanguageDropdown();
+  UI.populateLanguageDropdown();
 }
 
 init();
