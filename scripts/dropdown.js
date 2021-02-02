@@ -1,3 +1,7 @@
 $('.ui.dropdown').dropdown({
-  'clearable': true
+  'clearable': true,
+  'forceSelection': false,
+  'keys': {
+      enter: ''
+  }
 });
