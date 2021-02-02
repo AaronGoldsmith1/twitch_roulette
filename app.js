@@ -7,6 +7,7 @@ const topCategoriesUrl = 'https://api.twitch.tv/helix/games/top?first=100';
 const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
 const topTagsUrl = 'https://api.twitch.tv/helix/tags/streams?first=100';
 
+const darkModeToggle = document.getElementById('darkmode-toggle');
 const languageMenu = document.getElementById('language-menu');
 const mainContent = document.getElementById('main-content');
 const categoryMenu = document.getElementById('category-menu');
@@ -64,7 +65,7 @@ function getTopStreams() {
     new Twitch.Embed('twitch-embed', {
       width: '100%',
       height: '93%',
-      theme: 'dark',
+      theme: 'light',
       channel: randomStream,
       parent: ['localhost']
     });
@@ -92,7 +93,7 @@ function searchStreams(searchQuery) {
       new Twitch.Embed('twitch-embed', {
         width: '100%',
         height: '93%',
-        theme: 'dark',
+        theme: 'light',
         channel: randomStream,
         parent: ['localhost']
       });
@@ -177,7 +178,7 @@ function initLanguageDropDown(language) {
     new Twitch.Embed('twitch-embed', {
       width: '100%',
       height: '93%',
-      theme: 'dark',
+      theme: 'light',
       channel: randomStream,
       parent: ['localhost']
     });
@@ -245,6 +246,8 @@ function init() {
     refreshMainContent()
     initLanguageDropDown(e.target.dataset.value)
   });
+
+  darkModeToggle.addEventListener('click', toggleDarkLightModes)
 }
 
 init()
@@ -267,6 +270,4 @@ function toggleDarkLightModes() {
     // mainGrid.classList.remove('inverted', 'segment');
     // sideBar.classList.remove('padding-right');
   }
- 
-
 }
