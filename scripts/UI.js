@@ -1,4 +1,4 @@
-const UI = function() {
+const UI = (function() {
 
   function embedTwitch(randomStream) {
     new Twitch.Embed('twitch-embed', {
@@ -11,14 +11,16 @@ const UI = function() {
 }
   
   function populateLanguageDropdown() {
-    for (let key in languages) {
-      let newLanguageItem = document.createElement('div')
-      newLanguageItem.classList.add('item')
-      newLanguageItem.setAttribute('data-value', key)
-      newLanguageItem.innerText = languages[key];
-  
-      languageMenu.appendChild(newLanguageItem)
-    }
+    let languageArr = Object.entries(languages)
+    languageArr.sort((a,b) => a[1].localeCompare(b[1]))
+    languageArr.forEach(el => {
+      let newLanguageItem = document.createElement('div');
+      newLanguageItem.classList.add('item');
+      newLanguageItem.setAttribute('data-value', el[0])
+      newLanguageItem.innerText = el[1];
+      
+      languageMenu.appendChild(newLanguageItem);
+    });
   }
 
   function refreshMainContent() {
@@ -51,4 +53,4 @@ const UI = function() {
     refreshMainContent, 
     toggleDarkMode
   };
-}();
+})();
