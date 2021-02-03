@@ -140,7 +140,7 @@ function searchStreams(searchQuery) {
     .then((responseJson) => { 
       let streams = responseJson.data;
       let randomStream = streams[Math.floor(Math.random()*streams.length)];
-      console.log(randomStream)
+
       embedTwitch(randomStream)
     }).catch((error) => { 
       getTopStreams()
