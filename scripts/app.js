@@ -211,7 +211,7 @@ function init() {
   document.getElementById('darkmode-checkbox').addEventListener('click', toggleDarkMode)
   localStorage.setItem('darkmode', 'light');
   document.getElementById('hide-chat-checkbox').addEventListener('click', toggleVideoChat)
-  localStorage.setItem('videoChat', true);
+  localStorage.setItem('videoChat', 'video-with-chat');
   populateLanguageDropdown();
 }
 

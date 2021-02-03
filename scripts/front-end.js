@@ -3,8 +3,8 @@ const UI = (function() {
   function updateHistory(stream) {
     const viewingHistory = document.getElementById('history-content');
     const twitchStreamUrl = "https://twitch.tv/" + stream.user_name;
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = `
+    const historyItem = document.createElement('div');
+    historyItem.innerHTML = `
       <div class="ui fluid card">
         <div class="content">
           <div id="history-header" class="header"><a href=${twitchStreamUrl} target="_blank">${stream.user_name}</a> | ${stream.game_name}</div>
@@ -12,7 +12,7 @@ const UI = (function() {
         </div>
       </div>`
 
-    viewingHistory.prepend(wrapper);
+    viewingHistory.prepend(historyItem);
   }
 
   function embedTwitch(randomStream) {
@@ -23,17 +23,12 @@ const UI = (function() {
     let options = {
       width: '100%',
       height: '93%',
+      video: localStorage.getItem('videoChat'),
       theme: localStorage.getItem('darkmode'),
       channel: randomStream.user_name || randomStream.display_name,
       parent: ['localhost']
     }
 
-    if (!localStorage.getItem('videoChat')) {
-      options['layout'] = 'video'
-      } else {
-        delete options['layout'];
-      }
-  
     new Twitch.Embed('twitch-embed', options);
 }
   
@@ -80,11 +75,11 @@ const UI = (function() {
 
     if (iframe.src.indexOf('layout') === -1) {
       iframe.src += '&layout=video'
-      localStorage.setItem('videochat', false);
+      localStorage.setItem('videoChat', 'video-with-chat');
       darkModeToggle.style['visibility'] = 'hidden';
     } else {
       iframe.src = iframe.src.replace(/&layout=video/g, '')
-      localStorage.setItem('videochat', true);
+      localStorage.setItem('videoChat', 'video');
       darkModeToggle.style['visibility'] = 'visible';
     }
   }
@@ -97,13 +92,3 @@ const UI = (function() {
     toggleVideoChat,
   };
 })();
-
-
-//video only
-
-//https://embed.twitch.tv?channel=Chenzo&height=93%25&layout=video&migration=true&parent=localhost&parent=127.0.0.1&referrer=http%3A%2F%2F127.0.0.1%3A5500%2Findex.html&theme=light&width=100%25
-
-
-// video with chat
-
-//https://embed.twitch.tv?channel=Razerninjas&height=93%25&migration=true&parent=localhost&parent=127.0.0.1&referrer=http%3A%2F%2F127.0.0.1%3A5500%2Findex.html&theme=light&width=100%25
