@@ -139,7 +139,8 @@ function searchStreams(searchQuery) {
   fetch(request).then(response => response.json())
     .then((responseJson) => { 
       let streams = responseJson.data;
-      let randomStream = streams[Math.floor(Math.random()*streams.length)]?.display_name;
+      let randomStream = streams[Math.floor(Math.random()*streams.length)];
+      console.log(randomStream)
       embedTwitch(randomStream)
     }).catch((error) => { 
       getTopStreams()

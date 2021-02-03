@@ -22,7 +22,7 @@ const UI = (function() {
       width: '100%',
       height: '93%',
       theme: localStorage.getItem('darkmode'),
-      channel: randomStream.user_name,
+      channel: randomStream.user_name || randomStream.display_name,
       parent: ['localhost']
     }
 
