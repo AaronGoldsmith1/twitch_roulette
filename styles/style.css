@@ -6,6 +6,13 @@ body {
     visibility: hidden;
 }
 
+#error-card {
+    height: 10vh;
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
 #main-content {
     height: 100vh;
 }

@@ -1,4 +1,4 @@
-const { embedTwitch, populateLanguageDropdown, refreshMainContent, toggleDarkMode, toggleVideoChat } = UI;
+const { embedTwitch, populateLanguageDropdown, refreshMainContent, showError, toggleDarkMode, toggleVideoChat } = library;
 
 const clientId = 'usg4v0i9m8c8ow94fj7w1w8jrywo9k';
 const clientSecret = 'khcxdmodyqxoajyybl0mguqzmqjb6m';
@@ -21,8 +21,6 @@ const spinButtons = document.querySelectorAll('.spin');
 const tagMenu = document.getElementById('tag-menu');
 const welcomeCard = document.getElementById('welcome-card');
 
-const history = [];
-
 let access_token, searchEndpoint, searchQuery;
 
 async function getAccessToken() {
@@ -32,12 +30,12 @@ async function getAccessToken() {
     const response = await fetch(request);
     const responseJson = await response.json();
     access_token = responseJson.access_token;
-  } catch (error) {
-    console.error(error);
+  } catch {
+    showError()
   }
 }
 
-function getAllStreams (cursor, data = [], counter = 11) {
+function getAllStreams (cursor, data = [], counter = 12) {
   while (counter !== 0) {
     const request = new Request(topStreamsUrl + '&language=en'  + (cursor ? '&after=' + cursor : ''), { 
     method: 'GET' ,
@@ -51,8 +49,8 @@ function getAllStreams (cursor, data = [], counter = 11) {
         if (counter === 1) return data;
         data.push(...responseJson.data);
         return getAllStreams(responseJson.pagination.cursor, data, --counter);
-    }).catch((error) => { 
-      console.error(error);
+    }).catch(() => { 
+      showError()
     });
   }
 }
@@ -91,8 +89,6 @@ function getStreamTags() {
 
         tagMenu.appendChild(newTagItem)
       })
-    }).catch((error) => { 
-      console.error(error);
     });
 }
 
@@ -115,11 +111,46 @@ function getStreamCategories() {
         newCategoryItem.setAttribute('data-value', category.id)
         newCategoryItem.innerText = `${idx + 1}. ${category.name}`;
         categoryMenu.appendChild(newCategoryItem)
-      })
-    }).catch((error) => { 
-      console.error(error);
+      });
     });
+}
 
+function getStreamsByLanguage(language) {
+  const request = new Request(topStreamsUrl  + `&language=${language}`, { 
+    method: 'GET' ,
+    headers: {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${access_token}`,
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+    });
+    
+    fetch(request).then((response) => response.json()).then((responseJson) => { 
+      let allStreams = responseJson.data;
+      let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
+      embedTwitch(randomStream);
+    }).catch(() => { 
+      getTopStreams();
+    });
+}
+
+function getStreamsByCategory(categoryId) {
+  const request = new Request(topStreamsUrl  + `&language=en&game_id=${categoryId}`, { 
+    method: 'GET' ,
+    headers: {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${access_token}`,
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+    });
+    
+    fetch(request).then((response) => response.json()).then((responseJson) => { 
+      let allStreams = responseJson.data;
+      let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
+      embedTwitch(randomStream);
+    }).catch(() => { 
+      getTopStreams();
+    });
 }
 
 function searchStreams(searchQuery) {
@@ -140,54 +171,13 @@ function searchStreams(searchQuery) {
       let streams = responseJson.data;
       let randomStream = streams[Math.floor(Math.random()*streams.length)];
       embedTwitch(randomStream);
-    }).catch((error) => { 
+    }).catch(() => { 
       getTopStreams();
-      console.error(error);
-    });
-}
-
-function getStreamsByLanguage(language) {
-  const request = new Request(topStreamsUrl  + `&language=${language}`, { 
-    method: 'GET' ,
-    headers: {
-      'Client-ID': clientId,
-      'Authorization': `Bearer ${access_token}`,
-      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-      }
-    });
-    
-    fetch(request).then((response) => response.json()).then((responseJson) => { 
-      let allStreams = responseJson.data;
-      let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
-      embedTwitch(randomStream);
-    }).catch((error) => { 
-      getTopStreams();
-      console.error(error);
-    });
-}
-
-function getStreamsByCategory(categoryId) {
-  const request = new Request(topStreamsUrl  + `&language=en&game_id=${categoryId}`, { 
-    method: 'GET' ,
-    headers: {
-      'Client-ID': clientId,
-      'Authorization': `Bearer ${access_token}`,
-      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-      }
-    });
-    
-    fetch(request).then((response) => response.json()).then((responseJson) => { 
-      let allStreams = responseJson.data;
-      let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
-      embedTwitch(randomStream);
-    }).catch((error) => { 
-      getTopStreams();
-      console.error(error);
     });
 }
 
 function init() {
-  getAccessToken().then(getStreamTags).then(getStreamCategories)
+  getAccessToken().then(getStreamTags).then(getStreamCategories);
 
   searchButton.addEventListener('click', function(e) {
     if (searchInput.value) {
@@ -205,7 +195,6 @@ function init() {
   })
 
   categoryDropdown.addEventListener('click', function(e) {
-    console.log('category dropdown', e.target.dataset.value)
     refreshMainContent();
     getStreamsByCategory(parseInt(e.target.dataset.value));
   });
@@ -240,9 +229,3 @@ function init() {
 }
 
 init();
-
-
-
-
-
-

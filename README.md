@@ -44,8 +44,6 @@ function getAllStreams (cursor, data = [], counter = 11) {
         if (counter === 1) return data;
         data.push(...responseJson.data);
         return getAllStreams(responseJson.pagination.cursor, data, --counter);
-    }).catch((error) => { 
-      console.error(error);
     });
   }
 }
