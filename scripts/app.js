@@ -35,7 +35,7 @@ async function getAccessToken() {
   }
 }
 
-function getAllStreams (cursor, data = [], counter = 12) {
+function getAllStreams (cursor, data = [], counter = 20) {
   while (counter !== 0) {
     const request = new Request(topStreamsUrl + '&language=en'  + (cursor ? '&after=' + cursor : ''), { 
     method: 'GET' ,
@@ -86,7 +86,6 @@ function getStreamTags() {
         newTagItem.classList.add('item');
         newTagItem.setAttribute('data-value', tag);
         newTagItem.innerText = tag;
-
         tagMenu.appendChild(newTagItem)
       })
     });
@@ -104,13 +103,13 @@ function getStreamCategories() {
 
   fetch(request).then((response) => response.json())
     .then((responseJson) => { 
-      let categories = responseJson.data
+      let categories = responseJson.data;
       categories.forEach(function(category, idx) {
-        let newCategoryItem = document.createElement('div')
-        newCategoryItem.classList.add('item')
-        newCategoryItem.setAttribute('data-value', category.id)
+        let newCategoryItem = document.createElement('div');
+        newCategoryItem.classList.add('item');
+        newCategoryItem.setAttribute('data-value', category.id);
         newCategoryItem.innerText = `${idx + 1}. ${category.name}`;
-        categoryMenu.appendChild(newCategoryItem)
+        categoryMenu.appendChild(newCategoryItem);
       });
     });
 }
@@ -179,7 +178,7 @@ function searchStreams(searchQuery) {
 function init() {
   getAccessToken().then(getStreamTags).then(getStreamCategories);
 
-  searchButton.addEventListener('click', function(e) {
+  searchButton.addEventListener('click', function() {
     if (searchInput.value) {
       refreshMainContent();
       searchStreams();
@@ -188,7 +187,7 @@ function init() {
   })
 
   spinButtons.forEach(function(button) {
-    button.addEventListener('click', function(e) {
+    button.addEventListener('click', function() {
       refreshMainContent();
       getTopStreams();
     })

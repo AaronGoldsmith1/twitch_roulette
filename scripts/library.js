@@ -81,10 +81,9 @@ const library = (function() {
         Sorry, something went wrong.
       </div>
       <p>Please Try Again.</p>
-    </div>`
+    </div>`;
 
-    errorWrapper.innerHTML = errorMessage
-
+    errorWrapper.innerHTML = errorMessage;
     mainContent.appendChild(errorWrapper);
   }
 
