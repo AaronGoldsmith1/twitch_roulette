@@ -11,7 +11,6 @@ const languages = {
   da: 'Danish',
   de: 'German',
   el: 'Greek',
-  en: 'English',
   es: 'Spanish',
   et: 'Estonian',
   fa: 'Persian',

@@ -29,6 +29,7 @@ body {
     position: fixed;
     height: 100vh;
     padding-top: 68px;
+    left: 5px
 }
 
 #welcome-card {

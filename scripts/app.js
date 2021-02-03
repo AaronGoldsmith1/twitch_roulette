@@ -6,7 +6,7 @@ const clientSecret = 'khcxdmodyqxoajyybl0mguqzmqjb6m';
 const searchStreamsUrl = `https://api.twitch.tv/helix/search/channels?live_only=true&first=100&query=`
 const tokenUrl = `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
 const topCategoriesUrl = 'https://api.twitch.tv/helix/games/top?first=100';
-const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
+const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100&language=en';
 const topTagsUrl = 'https://api.twitch.tv/helix/tags/streams?first=100';
 
 const darkModeToggle = document.getElementById('darkmode-toggle');
