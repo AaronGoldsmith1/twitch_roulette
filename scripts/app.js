@@ -1,4 +1,4 @@
-const { embedTwitch, populateLanguageDropdown, refreshMainContent, toggleDarkMode } = UI;
+const { embedTwitch, populateLanguageDropdown, refreshMainContent, toggleDarkMode, toggleVideoChat } = UI;
 
 const clientId = 'usg4v0i9m8c8ow94fj7w1w8jrywo9k';
 const clientSecret = 'khcxdmodyqxoajyybl0mguqzmqjb6m';
@@ -209,6 +209,8 @@ function init() {
 
   document.getElementById('darkmode-checkbox').addEventListener('click', toggleDarkMode)
   localStorage.setItem('darkmode', 'light');
+  document.getElementById('hide-chat-toggle').addEventListener('click', toggleVideoChat)
+  localStorage.setItem('videoChat', true);
   populateLanguageDropdown();
 }
 

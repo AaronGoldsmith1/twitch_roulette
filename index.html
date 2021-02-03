@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
     <script src="./scripts/languages.js"></script>
-    <script src="./scripts/UI.js"></script>
+    <script src="./scripts/front-end.js"></script>
     <script src="./scripts/app.js" defer></script>
     <script src="https://embed.twitch.tv/embed/v1.js"></script>
     <title>Twitch Roulette</title>
@@ -82,6 +82,13 @@
 
           <div class="ui hidden divider"></div>
 
+          <div id="hide-chat-toggle" class="ui toggle checkbox">
+            <input type="checkbox" name="public">
+            <label>Hide Chat</label>
+          </div>
+
+          <div class="ui hidden divider"></div>
+
           <div id="darkmode-toggle" class="ui toggle checkbox">
             <input id="darkmode-checkbox" type="checkbox" name="public">
             <label id="toggle-label">Toggle Dark Mode</label>
@@ -105,6 +112,6 @@
       </div>
     </div>
     <div class="ui footer"></div>
-    <script src="./scripts/dropdown.js"></script>
+    <script src="./scripts/semantic-util.js"></script>
   </body>
 </html>
