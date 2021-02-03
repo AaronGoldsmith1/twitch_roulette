@@ -1,13 +1,19 @@
 const UI = (function() {
 
   function updateHistory(stream) {
+    const userName = stream.user_name ? stream.user_name : stream.display_name
     const viewingHistory = document.getElementById('history-content');
-    const twitchStreamUrl = "https://twitch.tv/" + stream.user_name;
+    const twitchStreamUrl = "https://twitch.tv/" + userName;
     const historyItem = document.createElement('div');
+ 
+    if (stream.game_name) {
+      stream.game_name = ` | ${stream.game_name}`
+    }
+
     historyItem.innerHTML = `
       <div class="ui fluid card">
         <div class="content">
-          <div id="history-header" class="header"><a href=${twitchStreamUrl} target="_blank">${stream.user_name}</a> | ${stream.game_name}</div>
+          <div id="history-header" class="header"><a href=${twitchStreamUrl} target="_blank">${userName}</a>${stream.game_name || ''}</div>
           <div class="description">${stream.title}</div>
         </div>
       </div>`

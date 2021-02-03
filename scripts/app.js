@@ -9,20 +9,21 @@ const topCategoriesUrl = 'https://api.twitch.tv/helix/games/top?first=100';
 const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
 const topTagsUrl = 'https://api.twitch.tv/helix/tags/streams?first=100';
 
+const categoryMenu = document.getElementById('category-menu');
 const darkModeToggle = document.getElementById('darkmode-toggle');
+const categoryDropdown = document.getElementsByClassName('filter-menu')[0]
+const tagDropdown = document.getElementsByClassName('filter-menu')[1]
 const languageMenu = document.getElementById('language-menu');
 const mainContent = document.getElementById('main-content');
-const categoryMenu = document.getElementById('category-menu');
-const dropdowns = document.getElementsByClassName('filter-menu')
 const searchButton = document.getElementById('search-button');
-const tagMenu = document.getElementById('tag-menu');
 const searchInput = document.getElementById('search-input');
 const spinButtons = document.querySelectorAll('.spin');
+const tagMenu = document.getElementById('tag-menu');
 const welcomeCard = document.getElementById('welcome-card');
 
-let access_token, searchEndpoint, searchQuery;
-
 const history = [];
+
+let access_token, searchEndpoint, searchQuery;
 
 async function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
@@ -57,14 +58,14 @@ function getAllStreams (cursor, data = [], counter = 11) {
 }
 
 function getTopStreams() {
-  let loader = document.createElement('div')
-  loader.className = 'ui huge active centered inline loader'
-  mainContent.appendChild(loader)
+  let loader = document.createElement('div');
+  loader.className = 'ui huge active centered inline loader';
+  mainContent.appendChild(loader);
 
   getAllStreams().then(function(allStreams) {
     let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
     mainContent.removeChild(loader);
-    embedTwitch(randomStream)
+    embedTwitch(randomStream);
   });
 
 }
@@ -81,11 +82,11 @@ function getStreamTags() {
 
   return fetch(request).then((response) => response.json())
     .then((responseJson) => { 
-      let tags = responseJson.data.map(tag => tag.localization_names['en-us']).sort()
+      let tags = responseJson.data.map(tag => tag.localization_names['en-us']).sort();
       tags.forEach(function(tag) {
-        let newTagItem = document.createElement('div')
-        newTagItem.classList.add('item')
-        newTagItem.setAttribute('data-value', tag)
+        let newTagItem = document.createElement('div');
+        newTagItem.classList.add('item');
+        newTagItem.setAttribute('data-value', tag);
         newTagItem.innerText = tag;
 
         tagMenu.appendChild(newTagItem)
@@ -93,7 +94,6 @@ function getStreamTags() {
     }).catch((error) => { 
       console.error(error);
     });
-
 }
 
 function getStreamCategories() {
@@ -108,13 +108,12 @@ function getStreamCategories() {
 
   fetch(request).then((response) => response.json())
     .then((responseJson) => { 
-      let categories = responseJson.data.map(category => category.name)
+      let categories = responseJson.data
       categories.forEach(function(category, idx) {
         let newCategoryItem = document.createElement('div')
         newCategoryItem.classList.add('item')
-        newCategoryItem.setAttribute('data-value', category)
-        newCategoryItem.innerText = `${idx + 1}. ${category}`;
-
+        newCategoryItem.setAttribute('data-value', category.id)
+        newCategoryItem.innerText = `${idx + 1}. ${category.name}`;
         categoryMenu.appendChild(newCategoryItem)
       })
     }).catch((error) => { 
@@ -140,15 +139,14 @@ function searchStreams(searchQuery) {
     .then((responseJson) => { 
       let streams = responseJson.data;
       let randomStream = streams[Math.floor(Math.random()*streams.length)];
-
-      embedTwitch(randomStream)
+      embedTwitch(randomStream);
     }).catch((error) => { 
-      getTopStreams()
+      getTopStreams();
       console.error(error);
     });
 }
 
-function searchStreamByLanguage(language) {
+function getStreamsByLanguage(language) {
   const request = new Request(topStreamsUrl  + `&language=${language}`, { 
     method: 'GET' ,
     headers: {
@@ -161,9 +159,29 @@ function searchStreamByLanguage(language) {
     fetch(request).then((response) => response.json()).then((responseJson) => { 
       let allStreams = responseJson.data;
       let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
-      embedTwitch(randomStream)
+      embedTwitch(randomStream);
     }).catch((error) => { 
-      getTopStreams()
+      getTopStreams();
+      console.error(error);
+    });
+}
+
+function getStreamsByCategory(categoryId) {
+  const request = new Request(topStreamsUrl  + `&language=en&game_id=${categoryId}`, { 
+    method: 'GET' ,
+    headers: {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${access_token}`,
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+    });
+    
+    fetch(request).then((response) => response.json()).then((responseJson) => { 
+      let allStreams = responseJson.data;
+      let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
+      embedTwitch(randomStream);
+    }).catch((error) => { 
+      getTopStreams();
       console.error(error);
     });
 }
@@ -173,7 +191,7 @@ function init() {
 
   searchButton.addEventListener('click', function(e) {
     if (searchInput.value) {
-      refreshMainContent()
+      refreshMainContent();
       searchStreams();
       searchInput.value = '';
     }
@@ -181,38 +199,50 @@ function init() {
 
   spinButtons.forEach(function(button) {
     button.addEventListener('click', function(e) {
-      refreshMainContent()
-      getTopStreams()
+      refreshMainContent();
+      getTopStreams();
     })
   })
 
-  Array.from(dropdowns).forEach(function(element) {
-    element.addEventListener('click', function(e) {
-      refreshMainContent()
-      searchStreams(e.target.dataset.value)
-    });
+  categoryDropdown.addEventListener('click', function(e) {
+    console.log('category dropdown', e.target.dataset.value)
+    refreshMainContent();
+    getStreamsByCategory(parseInt(e.target.dataset.value));
   });
+
+  tagDropdown.addEventListener('click', function(e) {
+    refreshMainContent();
+    searchStreams(e.target.dataset.value);
+  })
 
  document.body.addEventListener('click', function() {
     if (document.getElementsByClassName('clear')[0]) {
-      document.getElementsByClassName('clear')[0].click()
+      document.getElementsByClassName('clear')[0].click();
     }
   });
 
   languageMenu.addEventListener('click', function(e) {
-    refreshMainContent()
-    searchStreamByLanguage(e.target.dataset.value)
+    refreshMainContent();
+    getStreamsByLanguage(e.target.dataset.value);
   });
 
   document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
-    e.preventDefault()
+    e.preventDefault();
   })
 
-  document.getElementById('darkmode-checkbox').addEventListener('click', toggleDarkMode)
+  document.getElementById('darkmode-checkbox').addEventListener('click', toggleDarkMode);
   localStorage.setItem('darkmode', 'light');
-  document.getElementById('hide-chat-checkbox').addEventListener('click', toggleVideoChat)
+  
+  document.getElementById('hide-chat-checkbox').addEventListener('click', toggleVideoChat);
   localStorage.setItem('videoChat', 'video-with-chat');
+  
   populateLanguageDropdown();
 }
 
 init();
+
+
+
+
+
+
