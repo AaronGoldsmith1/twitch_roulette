@@ -2,11 +2,12 @@ const UI = (function() {
 
   function updateHistory(stream) {
     const viewingHistory = document.getElementById('history-content')
+    const twitchStreamUrl = "https://twitch.tv/" + stream.user_name
    
     viewingHistory.innerHTML += `
       <div class="ui fluid card">
         <div class="content">
-          <div id="history-header" class="header"><a>${stream.user_name}</a> | ${stream.game_name}</div>
+          <div id="history-header" class="header"><a href=${twitchStreamUrl} target="_blank">${stream.user_name}</a> | ${stream.game_name}</div>
           <div class="description">${stream.title}</div>
         </div>
       </div>`
