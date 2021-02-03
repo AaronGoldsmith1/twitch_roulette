@@ -22,6 +22,8 @@ const welcomeCard = document.getElementById('welcome-card');
 
 let access_token, searchEndpoint, searchQuery;
 
+const history = [];
+
 async function getAccessToken() {
   const request = new Request(tokenUrl, { method: 'POST' });
 
@@ -60,7 +62,7 @@ function getTopStreams() {
   mainContent.appendChild(loader)
 
   getAllStreams().then(function(allStreams) {
-    let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)].user_name;
+    let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
     mainContent.removeChild(loader);
     embedTwitch(randomStream)
   });
@@ -157,7 +159,7 @@ function searchStreamByLanguage(language) {
     
     fetch(request).then((response) => response.json()).then((responseJson) => { 
       let allStreams = responseJson.data;
-      let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)].user_name;
+      let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
       embedTwitch(randomStream)
     }).catch((error) => { 
       getTopStreams()

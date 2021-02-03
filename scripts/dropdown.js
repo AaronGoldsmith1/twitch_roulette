@@ -6,3 +6,7 @@ $('.ui.dropdown').dropdown({
   forceSelection: false,
   fullTextSearch: true
 });
+
+$('#history-button').click(function(){
+  $('.ui.modal').modal('show');
+})
