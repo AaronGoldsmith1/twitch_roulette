@@ -26,10 +26,10 @@ const UI = (function() {
       parent: ['localhost']
     }
 
-    if (!localStorage.getItem('videochat')) {
+    if (!localStorage.getItem('videoChat')) {
       options['layout'] = 'video'
       } else {
-        options['layout'] = 'video-with-chat'
+        delete options['layout'];
       }
   
     new Twitch.Embed('twitch-embed', options);
@@ -58,6 +58,7 @@ const UI = (function() {
     }
 
     darkModeToggle.style['visibility'] = 'visible';
+    document.getElementById('hide-chat-toggle').style['visibility'] = 'visible';
   }
 
   function toggleDarkMode() {
@@ -78,9 +79,11 @@ const UI = (function() {
     if (iframe.src.indexOf('layout') === -1) {
       iframe.src += '&layout=video'
       localStorage.setItem('videochat', false);
+      darkModeToggle.style['visibility'] = 'hidden';
     } else {
       iframe.src = iframe.src.replace(/&layout=video/g, '')
       localStorage.setItem('videochat', true);
+      darkModeToggle.style['visibility'] = 'visible';
     }
   }
 
