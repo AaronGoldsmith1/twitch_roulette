@@ -72,8 +72,11 @@ const library = (function() {
     if (document.getElementsByTagName('iframe').length) {
       document.getElementsByTagName('iframe')[0].remove();
     }
-
-    darkModeToggle.style.visibility = 'visible';
+    
+    if (localStorage.getItem('videoChat') === 'video-with-chat') {
+      darkModeToggle.style.visibility = 'visible';
+    }
+    
     chatToggle.style.visibility = 'visible'
   }
 
