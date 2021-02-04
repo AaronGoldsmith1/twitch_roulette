@@ -31,7 +31,7 @@ const library = (function() {
       height: '93%',
       muted: false,
       autoplay: true,
-      theme: localStorage.getItem('darkmode'),
+      theme: localStorage.getItem('darkMode'),
       channel: randomStream.user_name || randomStream.display_name,
       parent: ['localhost'],
     }
@@ -90,10 +90,10 @@ const library = (function() {
 
     if (iframe.src.indexOf('dark') === -1 ) {
       iframe.src = iframe.src.replace(/light/g, 'dark');
-      localStorage.setItem('darkmode', 'dark');
+      localStorage.setItem('darkMode', 'dark');
     } else {
       iframe.src = iframe.src.replace(/dark/g, 'light');
-      localStorage.setItem('darkmode', 'light');
+      localStorage.setItem('darkMode', 'light');
     }
   }
 

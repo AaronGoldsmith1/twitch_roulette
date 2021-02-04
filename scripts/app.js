@@ -224,7 +224,7 @@ function init() {
   })
 
   document.getElementById('darkmode-checkbox').addEventListener('click', toggleDarkMode);
-  localStorage.setItem('darkmode', 'light');
+  localStorage.setItem('darkMode', 'light');
   
   populateLanguageDropdown();
 }
