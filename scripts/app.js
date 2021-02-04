@@ -65,6 +65,7 @@ function getAllStreams (cursor, data = [], counter = 20) {
 
 function getTopStreams() {
   let loader = document.createElement('div');
+  loader.id = 'loader';
   loader.className = 'ui huge active centered inline loader';
   mainContent.appendChild(loader);
 

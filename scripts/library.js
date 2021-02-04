@@ -94,6 +94,11 @@ const library = (function() {
     </div>`;
 
     errorWrapper.innerHTML = errorMessage;
+
+    if (document.getElementById('loader')) {
+      document.getElementById('loader').remove();
+    }
+
     mainContent.appendChild(errorWrapper);
   }
 
