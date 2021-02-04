@@ -47,10 +47,6 @@ body {
     left: 5px
 }
 
-#hide-chat-toggle {
-    visibility: hidden;
-}
-
 #welcome-card {
     height: 35vh;
     width: 75%;

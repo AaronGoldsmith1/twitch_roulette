@@ -31,7 +31,6 @@ const library = (function() {
       height: '93%',
       muted: false,
       autoplay: true,
-      video: localStorage.getItem('videoChat'),
       theme: localStorage.getItem('darkmode'),
       channel: randomStream.user_name || randomStream.display_name,
       parent: ['localhost'],
@@ -67,7 +66,6 @@ const library = (function() {
     }
 
     darkModeToggle.style['visibility'] = 'visible';
-    document.getElementById('hide-chat-toggle').style['visibility'] = 'visible';
   }
 
   function showError() {
@@ -99,26 +97,11 @@ const library = (function() {
     }
   }
 
-  function toggleVideoChat() {
-    let iframe = document.getElementsByTagName('iframe')[0];
-
-    if (iframe.src.indexOf('layout') === -1) {
-      iframe.src += '&layout=video';
-      localStorage.setItem('videoChat', 'video-with-chat');
-      darkModeToggle.style['visibility'] = 'hidden';
-    } else {
-      iframe.src = iframe.src.replace(/&layout=video/g, '');
-      localStorage.setItem('videoChat', 'video');
-      darkModeToggle.style['visibility'] = 'visible';
-    }
-  }
-
   return {
     embedTwitch,
     populateLanguageDropdown,
     refreshMainContent,
     showError,
     toggleDarkMode,
-    toggleVideoChat,
   };
 })();

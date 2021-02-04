@@ -25,7 +25,7 @@ const {
   refreshMainContent, 
   showError, 
   toggleDarkMode, 
-  toggleVideoChat } = library;
+} = library;
 
 let access_token, searchEndpoint, searchQuery;
 
@@ -211,9 +211,6 @@ function init() {
  document.body.addEventListener('click', function() {
     if (document.getElementsByClassName('clear')[0]) {
       document.getElementsByClassName('clear')[0].click();
-      Array.from(document.getElementsByTagName('input')).forEach(function(input) {
-        input.value = '' 
-      })
     }
   });
 
@@ -228,9 +225,6 @@ function init() {
 
   document.getElementById('darkmode-checkbox').addEventListener('click', toggleDarkMode);
   localStorage.setItem('darkmode', 'light');
-  
-  document.getElementById('hide-chat-checkbox').addEventListener('click', toggleVideoChat);
-  localStorage.setItem('videoChat', 'video-with-chat');
   
   populateLanguageDropdown();
 }
