@@ -36,6 +36,12 @@ const library = (function() {
       parent: ['localhost'],
     }
 
+    // if (localStorage.getItem('videoChat') === 'video-only') {
+    //   options.layout = 'video'
+    // } else {
+    //   delete options.layout
+    // }
+
     new Twitch.Embed('twitch-embed', options);
 }
   
@@ -98,12 +104,14 @@ const library = (function() {
   }
 
   function toggleVideoChat() {
+    let iframe = document.getElementsByTagName('iframe')[0];
+
     if (localStorage.getItem('videoChat') === 'video-with-chat') {
       localStorage.setItem('videoChat', 'video-only')
-    
+      iframe.src += '&layout=video'
     } else {
       localStorage.setItem('videoChat', 'video-with-chat')
-    
+      iframe.src = iframe.src.replace(/&layout=video/g, '')
     }
   }
 
