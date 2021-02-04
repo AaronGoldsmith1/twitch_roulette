@@ -25,6 +25,7 @@ const {
   refreshMainContent, 
   showError, 
   toggleDarkMode, 
+  toggleVideoChat,
 } = library;
 
 let access_token, searchEndpoint, searchQuery;
@@ -225,6 +226,9 @@ function init() {
 
   document.getElementById('darkmode-checkbox').addEventListener('click', toggleDarkMode);
   localStorage.setItem('darkMode', 'light');
+  
+  document.getElementById('chat-checkbox').addEventListener('click', toggleVideoChat)
+  localStorage.setItem('videoChat', 'video-with-chat')
   
   populateLanguageDropdown();
 }

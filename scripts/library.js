@@ -97,11 +97,22 @@ const library = (function() {
     }
   }
 
+  function toggleVideoChat() {
+    if (localStorage.getItem('videoChat') === 'video-with-chat') {
+      localStorage.setItem('videoChat', 'video-only')
+    
+    } else {
+      localStorage.setItem('videoChat', 'video-with-chat')
+    
+    }
+  }
+
   return {
     embedTwitch,
     populateLanguageDropdown,
     refreshMainContent,
     showError,
     toggleDarkMode,
+    toggleVideoChat,
   };
 })();

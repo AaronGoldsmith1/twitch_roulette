@@ -2,6 +2,10 @@ body {
     overflow-y: hidden;
 }
 
+#chat-toggle {
+    visibility: hidden;
+}
+
 #darkmode-toggle {
     visibility: hidden;
 }
