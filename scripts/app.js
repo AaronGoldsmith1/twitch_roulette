@@ -1,5 +1,3 @@
-const { embedTwitch, populateLanguageDropdown, refreshMainContent, showError, toggleDarkMode, toggleVideoChat } = library;
-
 const clientId = 'usg4v0i9m8c8ow94fj7w1w8jrywo9k';
 const clientSecret = 'khcxdmodyqxoajyybl0mguqzmqjb6m';
 
@@ -20,6 +18,14 @@ const searchInput = document.getElementById('search-input');
 const spinButtons = document.querySelectorAll('.spin');
 const tagMenu = document.getElementById('tag-menu');
 const welcomeCard = document.getElementById('welcome-card');
+
+const { 
+  embedTwitch, 
+  populateLanguageDropdown, 
+  refreshMainContent, 
+  showError, 
+  toggleDarkMode, 
+  toggleVideoChat } = library;
 
 let access_token, searchEndpoint, searchQuery;
 
@@ -65,7 +71,6 @@ function getTopStreams() {
     mainContent.removeChild(loader);
     embedTwitch(randomStream);
   });
-
 }
 
 function getStreamTags() {
@@ -206,6 +211,9 @@ function init() {
  document.body.addEventListener('click', function() {
     if (document.getElementsByClassName('clear')[0]) {
       document.getElementsByClassName('clear')[0].click();
+      Array.from(document.getElementsByTagName('input')).forEach(function(input) {
+        input.value = '' 
+      })
     }
   });
 

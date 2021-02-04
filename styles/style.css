@@ -13,6 +13,14 @@ body {
     text-align: center;
 }
 
+#history-button {
+    margin-right: 10px;
+}
+
+#history-description {
+    overflow-wrap: anywhere;
+}
+
 #main-content {
     height: 100vh;
 }
@@ -75,3 +83,9 @@ body {
         margin-top: 0;
     }
 }
+
+.ui.search.dropdown > input.search {
+    top: initial;
+    margin-top: -1px;
+}
+

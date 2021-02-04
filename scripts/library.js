@@ -14,7 +14,7 @@ const library = (function() {
       <div class="ui fluid card">
         <div class="content">
           <div id="history-header" class="header"><a href=${twitchStreamUrl} target="_blank">${userName}</a>${stream.game_name || ''}</div>
-          <div class="description">${stream.title}</div>
+          <div id="history-description" class="description">${stream.title}</div>
         </div>
       </div>`
 

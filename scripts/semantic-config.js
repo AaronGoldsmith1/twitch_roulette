@@ -1,11 +1,13 @@
 $('.ui.dropdown').dropdown({
   clearable: true,
   keys: { 
-    enter: '' 
+    enter: '',
+    upArrow: '',
+    downArrow: ''
   },
   forceSelection: false,
   fullTextSearch: true, 
-  selected: false
+  selected: true
 });
 
 $('#history-button').click(function(){
