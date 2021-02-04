@@ -57,9 +57,7 @@ function getAllStreams (cursor, data = [], counter = 20) {
         if (counter === 1) return data;
         data.push(...responseJson.data);
         return getAllStreams(responseJson.pagination.cursor, data, --counter);
-    }).catch(() => { 
-      showError()
-    });
+    }).catch(showError);
   }
 }
 
@@ -136,9 +134,7 @@ function getStreamsByLanguage(language) {
       let allStreams = responseJson.data;
       let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
       embedTwitch(randomStream);
-    }).catch(() => { 
-      getTopStreams();
-    });
+    }).catch(getTopStreams);
 }
 
 function getStreamsByCategory(categoryId) {
@@ -155,9 +151,7 @@ function getStreamsByCategory(categoryId) {
       let allStreams = responseJson.data;
       let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
       embedTwitch(randomStream);
-    }).catch(() => { 
-      getTopStreams();
-    });
+    }).catch(getTopStreams);
 }
 
 function searchStreams(searchQuery) {
@@ -178,9 +172,7 @@ function searchStreams(searchQuery) {
       let streams = responseJson.data;
       let randomStream = streams[Math.floor(Math.random()*streams.length)];
       embedTwitch(randomStream);
-    }).catch(() => { 
-      getTopStreams();
-    });
+    }).catch(getTopStreams);
 }
 
 function init() {
