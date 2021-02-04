@@ -8,6 +8,7 @@ const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
 const topTagsUrl = 'https://api.twitch.tv/helix/tags/streams?first=100';
 
 const categoryMenu = document.getElementById('category-menu');
+const chatToggle = document.getElementById('chat-toggle');
 const darkModeToggle = document.getElementById('darkmode-toggle');
 const categoryDropdown = document.getElementsByClassName('filter-menu')[0]
 const tagDropdown = document.getElementsByClassName('filter-menu')[1]

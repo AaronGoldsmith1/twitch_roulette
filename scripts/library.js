@@ -73,7 +73,8 @@ const library = (function() {
       document.getElementsByTagName('iframe')[0].remove();
     }
 
-    darkModeToggle.style['visibility'] = 'visible';
+    darkModeToggle.style.visibility = 'visible';
+    chatToggle.style.visibility = 'visible'
   }
 
   function showError() {
