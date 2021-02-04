@@ -36,11 +36,13 @@ const library = (function() {
       parent: ['localhost'],
     }
 
-    // if (localStorage.getItem('videoChat') === 'video-only') {
-    //   options.layout = 'video'
-    // } else {
-    //   delete options.layout
-    // }
+    if (localStorage.getItem('videoChat') === 'video-only') {
+      options.layout = 'video'
+      darkModeToggle.style.visibility = 'hidden'
+    } else {
+      delete options.layout
+      darkModeToggle.style.visibility = 'visible'
+    }
 
     new Twitch.Embed('twitch-embed', options);
 }
@@ -108,10 +110,12 @@ const library = (function() {
 
     if (localStorage.getItem('videoChat') === 'video-with-chat') {
       localStorage.setItem('videoChat', 'video-only')
+      darkModeToggle.style.visibility = 'hidden'
       iframe.src += '&layout=video'
     } else {
       localStorage.setItem('videoChat', 'video-with-chat')
       iframe.src = iframe.src.replace(/&layout=video/g, '')
+      darkModeToggle.style.visibility = 'visible'
     }
   }
 
