@@ -43,7 +43,7 @@ async function getAccessToken() {
   }
 }
 
-function getAllStreams (cursor, data = [], counter = 25) {
+function getAllStreams (cursor, data = [], counter = 35) {
   while (counter !== 0) {
     const request = new Request(topStreamsUrl + '&language=en'  + (cursor ? '&after=' + cursor : ''), { 
     method: 'GET' ,
