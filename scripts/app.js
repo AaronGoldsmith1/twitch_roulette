@@ -39,11 +39,11 @@ async function getAccessToken() {
     const responseJson = await response.json();
     access_token = responseJson.access_token;
   } catch {
-    showError()
+    showError();
   }
 }
 
-function getAllStreams (cursor, data = [], counter = 20) {
+function getAllStreams (cursor, data = [], counter = 25) {
   while (counter !== 0) {
     const request = new Request(topStreamsUrl + '&language=en'  + (cursor ? '&after=' + cursor : ''), { 
     method: 'GET' ,

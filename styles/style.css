@@ -2,6 +2,11 @@ body {
     overflow-y: hidden;
 }
 
+iframe {
+    position: relative;
+    top: 2px;
+}
+
 #chat-toggle {
     visibility: hidden;
 }
