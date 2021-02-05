@@ -175,6 +175,15 @@ function searchStreams(searchQuery) {
     }).catch(getTopStreams);
 }
 
+
+
+const throttled = throttle(function() {
+      refreshMainContent();
+      getTopStreams();
+    }, 9000)
+
+
+
 function init() {
   getAccessToken().then(getStreamTags).then(getStreamCategories);
 
@@ -187,10 +196,7 @@ function init() {
   })
 
   spinButtons.forEach(function(button) {
-    button.addEventListener('click', function() {
-      refreshMainContent();
-      getTopStreams();
-    })
+    button.addEventListener('click', throttled)
   })
 
   categoryDropdown.addEventListener('click', function(e) {
@@ -228,3 +234,4 @@ function init() {
 }
 
 init();
+
