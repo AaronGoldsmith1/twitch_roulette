@@ -127,19 +127,8 @@ const library = (function() {
       darkModeToggle.style.visibility = 'visible'
     }
   }
-
-  return {
-    embedTwitch,
-    populateLanguageDropdown,
-    refreshMainContent,
-    showError,
-    toggleDarkMode,
-    toggleVideoChat,
-  };
-})();
-
-
-const throttle = (func, limit) => {
+  
+  const throttle = (func, limit) => {
   let inThrottle
   return (...args) => {
     if (!inThrottle) {
@@ -148,3 +137,16 @@ const throttle = (func, limit) => {
     }
   }
 }
+
+  return {
+    embedTwitch,
+    populateLanguageDropdown,
+    refreshMainContent,
+    showError,
+    throttle,
+    toggleDarkMode,
+    toggleVideoChat,
+  };
+})();
+
+

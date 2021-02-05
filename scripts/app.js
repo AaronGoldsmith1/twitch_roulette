@@ -25,6 +25,7 @@ const {
   populateLanguageDropdown, 
   refreshMainContent, 
   showError, 
+  throttle,
   toggleDarkMode, 
   toggleVideoChat,
 } = library;
@@ -134,7 +135,7 @@ function getStreamsByLanguage(language) {
       let allStreams = responseJson.data;
       let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
       embedTwitch(randomStream);
-    }).catch(getTopStreams);
+    }).catch(throttled);
 }
 
 function getStreamsByCategory(categoryId) {
@@ -151,7 +152,7 @@ function getStreamsByCategory(categoryId) {
       let allStreams = responseJson.data;
       let randomStream = allStreams[Math.floor(Math.random()*allStreams.length)];
       embedTwitch(randomStream);
-    }).catch(getTopStreams);
+    }).catch(throttled);
 }
 
 function searchStreams(searchQuery) {
@@ -172,17 +173,13 @@ function searchStreams(searchQuery) {
       let streams = responseJson.data;
       let randomStream = streams[Math.floor(Math.random()*streams.length)];
       embedTwitch(randomStream);
-    }).catch(getTopStreams);
+    }).catch(throttled);
 }
-
-
 
 const throttled = throttle(function() {
       refreshMainContent();
       getTopStreams();
-    }, 9000)
-
-
+    }, 6500)
 
 function init() {
   getAccessToken().then(getStreamTags).then(getStreamCategories);
