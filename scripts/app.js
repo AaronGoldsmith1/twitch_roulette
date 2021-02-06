@@ -177,9 +177,9 @@ function searchStreams(searchQuery) {
 }
 
 const throttled = throttle(function() {
-      refreshMainContent();
-      getTopStreams();
-    }, 6500)
+  refreshMainContent();
+  getTopStreams();
+}, 6500)
 
 function init() {
   getAccessToken().then(getStreamTags).then(getStreamCategories);
