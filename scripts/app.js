@@ -185,7 +185,7 @@ function init() {
   getAccessToken().then(getStreamTags).then(getStreamCategories);
 
   searchButton.addEventListener('click', function() {
-    if (searchInput.value) {
+    if (searchInput.value && !document.getElementById('loader')) {
       refreshMainContent();
       searchStreams();
       searchInput.value = '';
@@ -197,13 +197,17 @@ function init() {
   })
 
   categoryDropdown.addEventListener('click', function(e) {
-    refreshMainContent();
-    getStreamsByCategory(parseInt(e.target.dataset.value));
+    if (!document.getElementById('loader')) {
+      refreshMainContent();
+      getStreamsByCategory(parseInt(e.target.dataset.value));
+    }
   });
 
   tagDropdown.addEventListener('click', function(e) {
-    refreshMainContent();
-    searchStreams(e.target.dataset.value);
+    if (!document.getElementById('loader')) {
+      refreshMainContent();
+      searchStreams(e.target.dataset.value);
+    }
   })
 
  document.body.addEventListener('click', function() {
@@ -213,8 +217,10 @@ function init() {
   });
 
   languageMenu.addEventListener('click', function(e) {
-    refreshMainContent();
-    getStreamsByLanguage(e.target.dataset.value);
+    if (!document.getElementById('loader')) {
+      refreshMainContent();
+      getStreamsByLanguage(e.target.dataset.value);
+    }
   });
 
   document.getElementsByTagName('form')[0].addEventListener('submit', function(e) {
