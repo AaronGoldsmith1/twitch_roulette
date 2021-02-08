@@ -28,7 +28,7 @@ const library = (function() {
 
     let options = {
       width: '100%',
-      height: '92%',
+      height: '93%',
       muted: false,
       autoplay: true,
       theme: localStorage.getItem('darkMode'),
