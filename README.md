@@ -23,7 +23,7 @@
 2. Add your own Twitch client id and client secret values in `app.js`
 3. Open `index.html`
 or
-* Visit the following URL in your browser: https://aarongoldsmith1.github.io
+* Visit the following URL in your browser: https://aarongoldsmith1.github.io/twitch_roulette
 
 ### Unsolved problems / major hurdles that were overcome
 
