@@ -5,7 +5,7 @@ const searchStreamsUrl = `https://api.twitch.tv/helix/search/channels?live_only=
 const tokenUrl = `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
 const topCategoriesUrl = 'https://api.twitch.tv/helix/games/top?first=100';
 const topStreamsUrl = 'https://api.twitch.tv/helix/streams?first=100';
-const topTagsUrl = 'https://api.twitch.tv/helix/tags/streams?first=100';
+// const topTagsUrl = 'https://api.twitch.tv/helix/tags/streams?first=100';
 
 const categoryMenu = document.getElementById('category-menu');
 const chatToggle = document.getElementById('chat-toggle');
@@ -75,28 +75,28 @@ function getTopStreams() {
   });
 }
 
-function getStreamTags() {
-  const request = new Request(topTagsUrl, { 
-    method: 'GET' ,
-    headers: {
-      'Client-ID': clientId,
-      'Authorization': `Bearer ${access_token}`,
-      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-    }
-  });
+// function getStreamTags() {
+//   const request = new Request(topTagsUrl, { 
+//     method: 'GET' ,
+//     headers: {
+//       'Client-ID': clientId,
+//       'Authorization': `Bearer ${access_token}`,
+//       'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+//     }
+//   });
 
-  return fetch(request).then((response) => response.json())
-    .then((responseJson) => { 
-      let tags = responseJson.data.map(tag => tag.localization_names['en-us']).sort();
-      tags.forEach(function(tag) {
-        let newTagItem = document.createElement('div');
-        newTagItem.classList.add('item');
-        newTagItem.setAttribute('data-value', tag);
-        newTagItem.innerText = tag;
-        tagMenu.appendChild(newTagItem)
-      })
-    });
-}
+//   return fetch(request).then((response) => response.json())
+//     .then((responseJson) => { 
+//       let tags = responseJson.data.map(tag => tag.localization_names['en-us']).sort();
+//       tags.forEach(function(tag) {
+//         let newTagItem = document.createElement('div');
+//         newTagItem.classList.add('item');
+//         newTagItem.setAttribute('data-value', tag);
+//         newTagItem.innerText = tag;
+//         tagMenu.appendChild(newTagItem)
+//       })
+//     });
+// }
 
 function getStreamCategories() {
   const request = new Request(topCategoriesUrl, { 
@@ -182,7 +182,8 @@ const throttled = throttle(function() {
 }, 6500)
 
 function init() {
-  getAccessToken().then(getStreamTags).then(getStreamCategories);
+  // getAccessToken().then(getStreamTags).then(getStreamCategories);
+  getAccessToken().then(getStreamCategories);
 
   searchButton.addEventListener('click', function() {
     if (searchInput.value && !document.getElementById('loader')) {
@@ -203,12 +204,12 @@ function init() {
     }
   });
 
-  tagDropdown.addEventListener('click', function(e) {
-    if (!document.getElementById('loader')) {
-      refreshMainContent();
-      searchStreams(e.target.dataset.value);
-    }
-  })
+  // tagDropdown.addEventListener('click', function(e) {
+  //   if (!document.getElementById('loader')) {
+  //     refreshMainContent();
+  //     searchStreams(e.target.dataset.value);
+  //   }
+  // })
 
  document.body.addEventListener('click', function() {
     if (document.getElementsByClassName('clear')[0]) {
